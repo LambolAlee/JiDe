@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QEvent>
+#include <QAbstractItemDelegate>
 
 #include "data/formular.h"
 
@@ -15,7 +16,8 @@ class DrugEditor : public QWidget
     Q_OBJECT
 
 signals:
-    void editNextPrevItem(QWidget* editor, bool next);
+    void editNextPrevItem(QAbstractItemDelegate::EndEditHint);
+    void editNextWithInsertion();
 
 public:
     explicit DrugEditor(QWidget *parent = nullptr);
@@ -36,10 +38,12 @@ private:
     void setDropShadow();
     int _focusIndex = 0;
     QWidgetList _widgets;
+    QStringList _widgetsNames;
 
     bool nextFocus();
     bool prevFocus();
     void focusAndSelectAllInLineEdit();
+    void handleFocusInEditor();
 };
 
 #endif // DRUGEDITOR_H

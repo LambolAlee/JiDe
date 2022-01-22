@@ -1,9 +1,11 @@
 #include "drugeditor.h"
 #include "ui_drugeditor.h"
+#include "formulartableofme.h"
 
 #include <QGraphicsEffect>
 #include <QKeyEvent>
 #include <QFocusEvent>
+
 
 DrugEditor::DrugEditor(QWidget *parent) :
     QWidget(parent),
@@ -20,16 +22,23 @@ DrugEditor::DrugEditor(QWidget *parent) :
     ui->usageCB->installEventFilter(this);
 
     _widgets.append(ui->drugNameLE);
+    _widgetsNames.append(ui->drugNameLE->objectName());
     _widgets.append(ui->weightLE);
-//    _widgets.append(ui->unitCB);
-//    _widgets.append(ui->usageCB);
+    _widgetsNames.append(ui->weightLE->objectName());
 
-    setFocusProxy(ui->drugNameLE);
+    FormularTableOfMe *table = static_cast<FormularTableOfMe *>(parent);
+    connect(table, &FormularTableOfMe::focusInEditor, this, &DrugEditor::handleFocusInEditor);
 }
 
 DrugEditor::~DrugEditor()
 {
     delete ui;
+}
+
+void DrugEditor::handleFocusInEditor()
+{
+    ui->drugNameLE->setFocus();
+    ui->drugNameLE->selectAll();
 }
 
 void DrugEditor::setDropShadow()
@@ -44,6 +53,7 @@ void DrugEditor::setDropShadow()
 
 void DrugEditor::setDrug(const Drug &drug)
 {
+    if (drug.isEmpty()) return;
     setDrugName(drug.at(0));
     QString weight_and_unit = drug[1];
     QString unit = weight_and_unit.at(weight_and_unit.size()-1);
@@ -79,8 +89,11 @@ void DrugEditor::fitViewItemHeight(int height)
 
 Drug DrugEditor::submitDrug()
 {
+    QString name = ui->drugNameLE->text().trimmed();
+    if (name.isEmpty()) return Drug();
+
     Drug drug;
-    drug.append(ui->drugNameLE->text());
+    drug.append(name);
     drug.append(ui->weightLE->text() + ui->unitCB->currentText());
     QString usage = ui->usageCB->currentText();
     if (usage != "无")
@@ -92,15 +105,21 @@ bool DrugEditor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent *>(event);
-        if(keyEvent->key() == Qt::Key_Tab) {
+        auto key = keyEvent->key();
+        if(key == Qt::Key_Tab) {
             if (!nextFocus())
-                emit editNextPrevItem(this, true);
+                emit editNextPrevItem(QAbstractItemDelegate::EditNextItem);
             return true;
-        } else if (keyEvent->key() == Qt::Key_Backtab) {
+        } else if (key == Qt::Key_Backtab) {
             if (!prevFocus())
-                emit editNextPrevItem(this, false);
+                emit editNextPrevItem(QAbstractItemDelegate::EditPreviousItem);
+            return true;
+        } else if (key == Qt::Key_Return) {
+            emit editNextWithInsertion();
             return true;
         }
+    } else if (event->type() == QEvent::FocusIn && _widgetsNames.contains(obj->objectName())) {
+        _focusIndex = _widgetsNames.indexOf(obj->objectName());
     }
     return QWidget::eventFilter(obj, event);
 }

@@ -16,10 +16,14 @@ public:
     explicit FormularTableForm(QWidget *parent = nullptr);
     ~FormularTableForm();
 
+private slots:
+    void on_exportButton_clicked();
+
 private:
     Ui::FormularTableForm *ui;
 
     FormularModel *_model;
+    void initActions();
 };
 
 #endif // FORMULARTABLEFORM_H

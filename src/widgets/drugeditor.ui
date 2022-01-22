@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>253</width>
-    <height>60</height>
+    <width>270</width>
+    <height>70</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -60,6 +60,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -78,6 +83,11 @@
          <width>40</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
        </property>
        <property name="text">
         <string/>
@@ -100,6 +110,11 @@
          <width>40</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
        </property>
        <item>
         <property name="text">
@@ -126,7 +141,7 @@
     </layout>
    </item>
    <item row="1" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="usageLayout">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -134,7 +149,6 @@
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <family>微软雅黑</family>
          <pointsize>10</pointsize>
         </font>
        </property>

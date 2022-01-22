@@ -12,7 +12,6 @@ INCLUDEPATH += $$PWD/src
 
 SOURCES += \
     main.cpp \
-    src/data/drugdelegate.cpp \
     src/data/formular.cpp \
     src/data/formularmodel.cpp \
     src/ui/launchwindow.cpp \
@@ -21,7 +20,6 @@ SOURCES += \
     src/widgets/formulartableofme.cpp
 
 HEADERS += \
-    src/data/drugdelegate.h \
     src/data/formular.h \
     src/data/formularmodel.h \
     src/ui/launchwindow.h \
