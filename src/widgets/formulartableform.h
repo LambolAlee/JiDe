@@ -24,6 +24,7 @@ private:
 
     FormularModel *_model;
     void initActions();
+    void initModel();
 };
 
 #endif // FORMULARTABLEFORM_H

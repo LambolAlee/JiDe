@@ -2,6 +2,7 @@
 #define FORMULARTABLEOFME_H
 
 #include "drugeditor.h"
+#include "data/formularmodel.h"
 
 #include <QTableView>
 #include <QKeyEvent>
@@ -15,6 +16,7 @@ class FormularTableOfMe : public QTableView
 
 signals:
     void focusInEditor();
+    void drugCountChanged(int count);
 
 public:
     FormularTableOfMe(QWidget *parent = nullptr);
@@ -52,7 +54,12 @@ private:
     void editPrevItem(const QModelIndex &index);
     void editNextItem(const QModelIndex &index, bool insertion = false);
 
-    inline void insertRow(int row) { model()->insertRow(row); }
+    inline void insertRow(int row) { if (row < 0) return; model()->insertRow(row); }
+
+    inline int drugCount() {
+        FormularModel *fmodel = static_cast<FormularModel *>(model());
+        return fmodel->drugCount();
+    }
 };
 
 #endif // FORMULARTABLEOFME_H

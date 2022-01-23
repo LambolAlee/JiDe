@@ -37,6 +37,11 @@ void Formular::setDrug(const QModelIndex &idx, const Drug &drug)
     _formular.replace(i, drug);
 }
 
+int Formular::count()
+{
+    return std::count_if(_formular.cbegin(), _formular.cend(), [](const Drug &drug){ return !drug.isEmpty(); });
+}
+
 QPair<int, int> Formular::toRowCol(int i) const
 {
     int row, column;

@@ -38,6 +38,8 @@ public:
 
     bool clearItems(const QModelIndexList &indexs);
 
+    inline int drugCount() { return _formular->count(); }
+
     void tidy();
 
 private:

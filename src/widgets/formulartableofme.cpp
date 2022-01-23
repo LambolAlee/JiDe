@@ -1,6 +1,6 @@
 #include "formulartableofme.h"
 #include "drugeditor.h"
-#include "data/formularmodel.h"
+
 
 #include <QCursor>
 
@@ -55,6 +55,8 @@ void FormularTableOfMe::deleteItems()
 {
     FormularModel *fmodel = static_cast<FormularModel *>(model());
     fmodel->clearItems(selectedIndexes());
+    qDebug() << fmodel->drugCount();
+    emit drugCountChanged(fmodel->drugCount());
 }
 
 void FormularTableOfMe::deleteRows()
@@ -67,6 +69,7 @@ void FormularTableOfMe::deleteRows()
         previous = index.row();
         model()->removeRow(previous);
     });
+    emit drugCountChanged(drugCount());
 }
 
 void FormularTableOfMe::tidy()
@@ -133,6 +136,7 @@ void FormularTableOfMe::finish(const QModelIndex &index, QAbstractItemDelegate::
     default:
         break;
     }
+    emit drugCountChanged(drugCount());
 }
 
 void FormularTableOfMe::initEditor(const QModelIndex &idx, QRect rect)

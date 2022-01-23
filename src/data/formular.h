@@ -26,7 +26,7 @@ public:
     inline int toListIndex(int row, int column) { return 4*row + column; }
     inline int toListIndex(const QModelIndex &idx) { return toListIndex(idx.row(), idx.column()); }
     inline int toListIndex(QPair<int, int> pos) { return toListIndex(pos.first, pos.second); }
-    inline int count() { return _formular.count(); }
+    int count();
 
     QPair<int, int> toRowCol(int i) const;
 
