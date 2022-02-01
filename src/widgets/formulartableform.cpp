@@ -1,7 +1,7 @@
 #include "formulartableform.h"
 #include "ui_formulartableform.h"
 
-#include "data/formular.h"
+#include "formular/formular.h"
 #include "drugeditor.h"
 
 #include <QMimeData>

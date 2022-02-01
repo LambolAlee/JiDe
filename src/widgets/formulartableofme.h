@@ -2,7 +2,7 @@
 #define FORMULARTABLEOFME_H
 
 #include "drugeditor.h"
-#include "data/formularmodel.h"
+#include "formular/formularmodel.h"
 
 #include <QTableView>
 #include <QKeyEvent>

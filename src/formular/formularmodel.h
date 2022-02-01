@@ -1,7 +1,7 @@
 #ifndef FORMULARMODEL_H
 #define FORMULARMODEL_H
 
-#include "data/formular.h"
+#include "formular.h"
 
 #include <QAbstractTableModel>
 

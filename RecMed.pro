@@ -10,18 +10,20 @@ CONFIG += c++20
 
 INCLUDEPATH += $$PWD/src
 
+include(src/third-party/DBUtil/DBUtil.pri)
+
 SOURCES += \
     main.cpp \
-    src/data/formular.cpp \
-    src/data/formularmodel.cpp \
+    src/formular/formular.cpp \
+    src/formular/formularmodel.cpp \
     src/ui/launchwindow.cpp \
     src/widgets/drugeditor.cpp \
     src/widgets/formulartableform.cpp \
     src/widgets/formulartableofme.cpp
 
 HEADERS += \
-    src/data/formular.h \
-    src/data/formularmodel.h \
+    src/formular/formular.h \
+    src/formular/formularmodel.h \
     src/ui/launchwindow.h \
     src/widgets/drugeditor.h \
     src/widgets/formulartableform.h \
@@ -33,7 +35,7 @@ FORMS += \
     src/widgets/formulartableform.ui
 
 TRANSLATIONS += \
-    RecMed_zh_CN.ts
+    translations/RecMed_zh_CN.ts
 
 CONFIG += lrelease
 CONFIG += embed_translations

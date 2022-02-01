@@ -2,7 +2,7 @@
 #define FORMULARTABLEFORM_H
 
 #include <QWidget>
-#include "data/formularmodel.h"
+#include "formular/formularmodel.h"
 
 namespace Ui {
 class FormularTableForm;

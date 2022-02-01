@@ -1,5 +1,4 @@
 #include "formularmodel.h"
-#include "widgets/drugeditor.h"
 
 #include <QMimeData>
 #include <QIODevice>
@@ -29,7 +28,7 @@ int FormularModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return (_formular->count() +3) / 4;
+    return (_formular->formattedCount() +3) / 4;
 }
 
 int FormularModel::columnCount(const QModelIndex &parent) const
@@ -45,7 +44,6 @@ QVariant FormularModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
     if (role == Qt::DisplayRole) {
-        //qDebug() << index;
         Drug drug = _formular->getDrug(index);
         return Formular::toString(drug);
     } else if (role == Qt::EditRole) {
@@ -152,7 +150,6 @@ bool FormularModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     QDataStream posStream(&encodedPos, QIODevice::ReadOnly);
     QList<QPair<int,int>> posList;
     QList<Drug> drugList;
-    //QList<QModelIndex> indexes;
 
     while (!stream.atEnd()) {
         QString text; QPair<int,int> pos;

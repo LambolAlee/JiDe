@@ -5,7 +5,7 @@
 #include <QEvent>
 #include <QAbstractItemDelegate>
 
-#include "data/formular.h"
+#include "formular/formular.h"
 
 namespace Ui {
 class DrugEditor;
