@@ -16,23 +16,44 @@ SOURCES += \
     main.cpp \
     src/formular/formular.cpp \
     src/formular/formularmodel.cpp \
+    src/ui/basicinfodockwidget.cpp \
     src/ui/launchwindow.cpp \
+    src/widgets/diagnosiswidget.cpp \
     src/widgets/drugeditor.cpp \
+    src/widgets/examinewidget.cpp \
     src/widgets/formulartableform.cpp \
-    src/widgets/formulartableofme.cpp
+    src/widgets/formulartableofme.cpp \
+    src/widgets/groupeditorwidget.cpp \
+    src/widgets/inforecordwidget.cpp \
+    src/widgets/lineeditwithextensibletextbox.cpp \
+    src/widgets/stateillnesswidget.cpp
 
 HEADERS += \
     src/formular/formular.h \
     src/formular/formularmodel.h \
+    src/ui/basicinfodockwidget.h \
     src/ui/launchwindow.h \
+    src/widgets/diagnosiswidget.h \
     src/widgets/drugeditor.h \
+    src/widgets/examinewidget.h \
     src/widgets/formulartableform.h \
-    src/widgets/formulartableofme.h
+    src/widgets/formulartableofme.h \
+    src/widgets/groupeditorwidget.h \
+    src/widgets/inforecordwidget.h \
+    src/widgets/lineeditwithextensibletextbox.h \
+    src/widgets/stateillnesswidget.h
 
 FORMS += \
+    src/ui/basicinfodockwidget.ui \
     src/ui/launchwindow.ui \
+    src/widgets/diagnosiswidget.ui \
     src/widgets/drugeditor.ui \
-    src/widgets/formulartableform.ui
+    src/widgets/examinewidget.ui \
+    src/widgets/formulartableform.ui \
+    src/widgets/groupeditorwidget.ui \
+    src/widgets/inforecordwidget.ui \
+    src/widgets/lineeditwithextensibletextbox.ui \
+    src/widgets/stateillnesswidget.ui
 
 TRANSLATIONS += \
     translations/RecMed_zh_CN.ts
@@ -44,3 +65,6 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources/icons.qrc
