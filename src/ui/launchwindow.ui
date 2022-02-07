@@ -14,7 +14,10 @@
    <string>LaunchWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QFormLayout" name="formLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -27,7 +30,23 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item row="0" column="0" colspan="2">
+    <item>
+     <widget class="SideBar" name="widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>70</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>70</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QSplitter" name="splitter">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -153,110 +172,6 @@
    <addaction name="menu_3"/>
    <addaction name="menu_2"/>
   </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>60</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <property name="movable">
-    <bool>false</bool>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionPatient"/>
-   <addaction name="actionRecord"/>
-   <addaction name="actionTag"/>
-   <addaction name="actionNote"/>
-   <addaction name="actionSave"/>
-   <addaction name="actionExport"/>
-  </widget>
-  <action name="actionPatient">
-   <property name="icon">
-    <iconset resource="../../resources/icons.qrc">
-     <normaloff>:/iconfont/patient.svg</normaloff>:/iconfont/patient.svg</iconset>
-   </property>
-   <property name="text">
-    <string>病人</string>
-   </property>
-   <property name="autoRepeat">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionRecord">
-   <property name="icon">
-    <iconset resource="../../resources/icons.qrc">
-     <normaloff>:/iconfont/record.svg</normaloff>:/iconfont/record.svg</iconset>
-   </property>
-   <property name="text">
-    <string>病历</string>
-   </property>
-   <property name="autoRepeat">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionTag">
-   <property name="icon">
-    <iconset resource="../../resources/icons.qrc">
-     <normaloff>:/iconfont/tag.svg</normaloff>:/iconfont/tag.svg</iconset>
-   </property>
-   <property name="text">
-    <string>标签</string>
-   </property>
-   <property name="autoRepeat">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionNote">
-   <property name="icon">
-    <iconset resource="../../resources/icons.qrc">
-     <normaloff>:/iconfont/note.svg</normaloff>:/iconfont/note.svg</iconset>
-   </property>
-   <property name="text">
-    <string>备注</string>
-   </property>
-   <property name="autoRepeat">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionSave">
-   <property name="icon">
-    <iconset resource="../../resources/icons.qrc">
-     <normaloff>:/iconfont/save.svg</normaloff>:/iconfont/save.svg</iconset>
-   </property>
-   <property name="text">
-    <string>保存</string>
-   </property>
-   <property name="autoRepeat">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionExport">
-   <property name="icon">
-    <iconset resource="../../resources/icons.qrc">
-     <normaloff>:/iconfont/export.svg</normaloff>:/iconfont/export.svg</iconset>
-   </property>
-   <property name="text">
-    <string>导出</string>
-   </property>
-   <property name="autoRepeat">
-    <bool>false</bool>
-   </property>
-  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -289,9 +204,13 @@
    <header>widgets/examinewidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>SideBar</class>
+   <extends>QWidget</extends>
+   <header>widgets/sidebar.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../resources/icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

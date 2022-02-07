@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QResource>
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +18,8 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
+    qApp->setStyleSheet("file:///:/stylesheet/style.qss");
 
     LaunchWindow w;
     w.show();

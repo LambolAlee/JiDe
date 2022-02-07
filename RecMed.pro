@@ -26,6 +26,7 @@ SOURCES += \
     src/widgets/groupeditorwidget.cpp \
     src/widgets/inforecordwidget.cpp \
     src/widgets/lineeditwithextensibletextbox.cpp \
+    src/widgets/sidebar.cpp \
     src/widgets/stateillnesswidget.cpp
 
 HEADERS += \
@@ -41,6 +42,7 @@ HEADERS += \
     src/widgets/groupeditorwidget.h \
     src/widgets/inforecordwidget.h \
     src/widgets/lineeditwithextensibletextbox.h \
+    src/widgets/sidebar.h \
     src/widgets/stateillnesswidget.h
 
 FORMS += \
@@ -53,6 +55,7 @@ FORMS += \
     src/widgets/groupeditorwidget.ui \
     src/widgets/inforecordwidget.ui \
     src/widgets/lineeditwithextensibletextbox.ui \
+    src/widgets/sidebar.ui \
     src/widgets/stateillnesswidget.ui
 
 TRANSLATIONS += \
@@ -67,4 +70,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources/icons.qrc
+    resources/resources.qrc

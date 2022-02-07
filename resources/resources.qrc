@@ -6,5 +6,9 @@
         <file>iconfont/save.svg</file>
         <file>iconfont/tag.svg</file>
         <file>iconfont/note.svg</file>
+        <file>iconfont/brush.svg</file>
+    </qresource>
+    <qresource prefix="/stylesheet">
+        <file>style.qss</file>
     </qresource>
 </RCC>

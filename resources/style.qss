@@ -1,0 +1,40 @@
+/**======================= SideBar widget customize start =====================*/
+SideBar {
+    background:#d2e4da;
+}
+
+SideBar QToolButton {
+    border-style:solid; background:transparent;
+}
+
+SideBar QToolButton[checkable=true] {
+    border-width:0px 0px 0px 3px;
+    padding-left:4px;
+    padding-right:8px;
+}
+
+SideBar QToolButton[checkable=false] {
+    padding-top:4px;
+    padding-bottom:5px;
+}
+
+SideBar QToolButton:hover {
+    background:rgba(242,247,244,0.4);
+}
+
+SideBar QToolButton:pressed {
+    background:#c2dacd;
+}
+
+SideBar QToolButton[checkable=true]:checked {
+    border-color:white;
+    background:#c2dacd;
+}
+/**======================= SideBar widget customize end =====================*/
+
+/**TabBar 等分tab栏 */
+QTabBar {
+    qproperty-usesScrollButtons:false;
+    qproperty-documentMode:true;
+    qproperty-expanding:true;
+}
