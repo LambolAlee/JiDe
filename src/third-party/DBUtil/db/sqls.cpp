@@ -52,9 +52,10 @@ SqlsPrivate::SqlsPrivate(Sqls *context) : _context(context)
     QStringList sqlFiles = Config::instance().getDatabaseSqlFiles();
 
     for (const QString &fileName: sqlFiles) {
-        qDebug() << QString("Loading SQL file: %1").arg(fileName);
+        QString fn = Config::resolve(fileName);
+        qDebug() << QString("Loading SQL file: %1").arg(fn);
 
-        QFile file(fileName);
+        QFile file(fn);
         if (!open(&file)) {
             _context->_flag = false;
             return;

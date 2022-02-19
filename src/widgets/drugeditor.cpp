@@ -1,6 +1,5 @@
 #include "drugeditor.h"
 #include "ui_drugeditor.h"
-#include "formulartableofme.h"
 
 #include <QGraphicsEffect>
 #include <QKeyEvent>
@@ -14,31 +13,20 @@ DrugEditor::DrugEditor(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_StyledBackground);
     setStyleSheet("DrugEditor{background:#f0f0f0;}");
+    setWindowFlag(Qt::Popup);
 
     setDropShadow();
+
     ui->drugNameLE->installEventFilter(this);
     ui->weightLE->installEventFilter(this);
-    ui->unitCB->installEventFilter(this);
-    ui->usageCB->installEventFilter(this);
 
-    _widgets.append(ui->drugNameLE);
-    _widgetsNames.append(ui->drugNameLE->objectName());
-    _widgets.append(ui->weightLE);
-    _widgetsNames.append(ui->weightLE->objectName());
-
-    FormularTableOfMe *table = static_cast<FormularTableOfMe *>(parent);
-    connect(table, &FormularTableOfMe::focusInEditor, this, &DrugEditor::handleFocusInEditor);
+    connect(ui->drugNameLE, &QLineEdit::returnPressed, this, &DrugEditor::editNextWithInsertion);
+    connect(ui->weightLE, &QLineEdit::returnPressed, this, &DrugEditor::editNextWithInsertion);
 }
 
 DrugEditor::~DrugEditor()
 {
     delete ui;
-}
-
-void DrugEditor::handleFocusInEditor()
-{
-    ui->drugNameLE->setFocus();
-    ui->drugNameLE->selectAll();
 }
 
 void DrugEditor::setDropShadow()
@@ -53,14 +41,9 @@ void DrugEditor::setDropShadow()
 
 void DrugEditor::setDrug(const Drug &drug)
 {
-    if (drug.isEmpty()) return;
-    setDrugName(drug.at(0));
-    QString weight_and_unit = drug[1];
-    QString unit = weight_and_unit.at(weight_and_unit.size()-1);
-    QString weight = weight_and_unit.remove(unit);
-    setDrugWeight(weight, unit);
-    if (drug.count() == 3)
-        setDrugUsage(drug.at(2));
+    setDrugName(drug.value(0));
+    setDrugWeight(drug.value(1, "g"));
+    setDrugUsage(drug.value(2, "无"));
 }
 
 void DrugEditor::setDrugName(const QString &name)
@@ -68,8 +51,10 @@ void DrugEditor::setDrugName(const QString &name)
     ui->drugNameLE->setText(name);
 }
 
-void DrugEditor::setDrugWeight(const QString &weight, const QString &unit)
+void DrugEditor::setDrugWeight(QString &&weight_and_unit)
 {
+    QString unit = weight_and_unit.at(weight_and_unit.size()-1);
+    QString weight = weight_and_unit.remove(unit);
     ui->weightLE->setText(weight);
     ui->unitCB->setCurrentText(unit);
 }
@@ -101,50 +86,23 @@ Drug DrugEditor::submitDrug()
     return drug;
 }
 
+void DrugEditor::focusInEditor()
+{
+    ui->drugNameLE->setFocus();
+    ui->drugNameLE->selectAll();
+}
+
 bool DrugEditor::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type() == QEvent::KeyPress) {
+    if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent *>(event);
-        auto key = keyEvent->key();
-        if(key == Qt::Key_Tab) {
-            if (!nextFocus())
-                emit editNextPrevItem(QAbstractItemDelegate::EditNextItem);
+        if (keyEvent->key() == Qt::Key_Tab && obj->objectName() == QStringLiteral("weightLE")) {
+            emit editNextPrevItem(QAbstractItemDelegate::EditNextItem);
             return true;
-        } else if (key == Qt::Key_Backtab) {
-            if (!prevFocus())
-                emit editNextPrevItem(QAbstractItemDelegate::EditPreviousItem);
-            return true;
-        } else if (key == Qt::Key_Return) {
-            emit editNextWithInsertion();
+        } else if (keyEvent->key() == Qt::Key_Backtab && obj->objectName() == QStringLiteral("drugNameLE")) {
+            emit editNextPrevItem(QAbstractItemDelegate::EditPreviousItem);
             return true;
         }
-    } else if (event->type() == QEvent::FocusIn && _widgetsNames.contains(obj->objectName())) {
-        _focusIndex = _widgetsNames.indexOf(obj->objectName());
     }
     return QWidget::eventFilter(obj, event);
-}
-
-void DrugEditor::focusAndSelectAllInLineEdit()
-{
-    auto *l = static_cast<QLineEdit *>(_widgets.at(_focusIndex));
-    l->selectAll();
-    l->setFocus();
-}
-
-bool DrugEditor::nextFocus()
-{
-    if (_focusIndex)
-        return false;
-    _focusIndex = _focusIndex + 1;
-    focusAndSelectAllInLineEdit();
-    return true;
-}
-
-bool DrugEditor::prevFocus()
-{
-    if (!_focusIndex)
-        return false;
-    _focusIndex = _focusIndex - 1;
-    focusAndSelectAllInLineEdit();
-    return true;
 }

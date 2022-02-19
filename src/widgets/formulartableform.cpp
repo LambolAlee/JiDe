@@ -4,8 +4,6 @@
 #include "formular/formular.h"
 #include "drugeditor.h"
 
-#include <QMimeData>
-
 FormularTableForm::FormularTableForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FormularTableForm)
@@ -55,5 +53,5 @@ void FormularTableForm::initActions()
 
 void FormularTableForm::on_exportButton_clicked()
 {
-
+    //ui->formularTable->test();
 }

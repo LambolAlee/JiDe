@@ -64,17 +64,16 @@ T& Singleton<T>::getInstance() {
  |                               Singleton Macro                               |
  |----------------------------------------------------------------------------*/
 #define SINGLETON(Class)                           \
+public:                                            \
+    static Class& instance() {                     \
+        return Singleton<Class>::getInstance();    \
+    }                                              \
 private:                                           \
     Class();                                       \
     ~Class();                                      \
     Class(const Class &other) = delete;            \
     Class& operator=(const Class &other) = delete; \
     friend class  Singleton<Class>;                \
-    friend struct QScopedPointerDeleter<Class>;    \
-                                                   \
-public:                                            \
-    static Class& instance() {                     \
-        return Singleton<Class>::getInstance();    \
-    }
+    friend struct QScopedPointerDeleter<Class>;
 
 #endif // SINGLETON_H

@@ -1,12 +1,14 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <QString>
+
 #include "util/Singleton.h"
 class Json;
 
 /**
  * 用于读写配置文件:
- * 1. resources/config.json: 存储配置的信息，例如数据库信息，QSS 文件的路径
+ * 1. config.json: 存储配置的信息，例如数据库信息，QSS 文件的路径
  */
 class Config {
     SINGLETON(Config)
@@ -28,6 +30,9 @@ public:
 
     // 其它
     QStringList getQssFiles() const; // QSS 样式表文件, 可以是多个
+
+    static QString resolve(QLatin1String relativePath);
+    static QString resolve(const QString &relativePath);
 
 private:
     Json *json;

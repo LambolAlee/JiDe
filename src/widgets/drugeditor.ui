@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>270</width>
-    <height>70</height>
+    <height>72</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,7 @@
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <property name="horizontalSpacing">
-    <number>0</number>
-   </property>
-   <property name="verticalSpacing">
-    <number>7</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -39,9 +33,9 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>5</number>
+    <number>7</number>
    </property>
-   <item row="0" column="0" colspan="2">
+   <item>
     <layout class="QHBoxLayout" name="drugLayout">
      <property name="spacing">
       <number>0</number>
@@ -116,6 +110,9 @@
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <item>
         <property name="text">
          <string>g</string>
@@ -140,7 +137,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item>
     <layout class="QHBoxLayout" name="usageLayout">
      <property name="spacing">
       <number>0</number>
@@ -159,6 +156,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="usageCB">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <item>
         <property name="text">
          <string>无</string>

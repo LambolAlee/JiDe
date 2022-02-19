@@ -7,6 +7,7 @@
 
 #include "formular/formular.h"
 
+
 namespace Ui {
 class DrugEditor;
 }
@@ -24,11 +25,9 @@ public:
     ~DrugEditor();
 
     void setDrug(const Drug &);
-    void setDrugName(const QString &);
-    void setDrugWeight(const QString &, const QString &);
-    void setDrugUsage(const QString &);
     void fitViewItemHeight(int);
     Drug submitDrug();
+    void focusInEditor();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -36,14 +35,10 @@ protected:
 private:
     Ui::DrugEditor *ui;
     void setDropShadow();
-    int _focusIndex = 0;
-    QWidgetList _widgets;
-    QStringList _widgetsNames;
 
-    bool nextFocus();
-    bool prevFocus();
-    void focusAndSelectAllInLineEdit();
-    void handleFocusInEditor();
+    void setDrugName(const QString &);
+    void setDrugWeight(QString &&);
+    void setDrugUsage(const QString &);
 };
 
 #endif // DRUGEDITOR_H

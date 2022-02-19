@@ -1,19 +1,24 @@
 #include "launchwindow.h"
 #include "ui_launchwindow.h"
-#include "basicinfodockwidget.h"
 
-#include <QSizePolicy>
+#include "widgets/formulartableform.h"
+
 
 LaunchWindow::LaunchWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::LaunchWindow)
 {
     ui->setupUi(this);
-    ui->splitter->setStretchFactor(0, 13);
-    ui->splitter->setStretchFactor(1, 17);
+    FormularTableForm *form = new FormularTableForm(this);
+    setCentralWidget(form);
 }
 
 LaunchWindow::~LaunchWindow()
 {
     delete ui;
+}
+
+QMenuBar *LaunchWindow::menuBar()
+{
+    return ui->menuBar;
 }

@@ -7,14 +7,12 @@
 
 using Drug = QList<QString>;
 
-class Formular
+class Formular : private QList<Drug>
 {
 public:
     explicit Formular();
     explicit Formular(const QString &);
 
-    void set(const QString &);
-    void set(const QList<Drug> &);
     void get();
 
     Drug getDrug(int index);
@@ -23,11 +21,11 @@ public:
     void setDrug(const QModelIndex &, const Drug &);
     void setDrug(QString);
 
-    inline int toListIndex(int row, int column) { return 4*row + column; }
-    inline int toListIndex(const QModelIndex &idx) { return toListIndex(idx.row(), idx.column()); }
-    inline int toListIndex(QPair<int, int> pos) { return toListIndex(pos.first, pos.second); }
-    int count();
-    inline int formattedCount() const { return _formular.count(); }
+    int toListIndex(int row, int column) { return 4*row + column; }
+    int toListIndex(const QModelIndex &idx) { return toListIndex(idx.row(), idx.column()); }
+    int toListIndex(QPair<int, int> pos) { return toListIndex(pos.first, pos.second); }
+    int exactCount();
+    int formattedCount() const { return count(); }
 
     QPair<int, int> toRowCol(int i) const;
 
@@ -40,11 +38,9 @@ public:
     void tidy();
 
     static Drug toDrug(const QString &);
-    inline static QString toString(const Drug &drug) { return drug.join(" "); }
+    static QString toString(const Drug &drug) { return drug.join(" "); }
 
 private:
-    QList<Drug> _formular;
-
     void completeDrug();
 };
 

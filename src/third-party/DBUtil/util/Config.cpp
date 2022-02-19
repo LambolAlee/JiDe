@@ -4,8 +4,11 @@
 #include <QString>
 #include <QStringList>
 
+extern const QLatin1String CONF_ROOT(".recmed/%1");
+
+
 Config::Config() {
-    json = new Json("config.json", true); // 配置文件路径
+    json = new Json(resolve(QLatin1String("config.json")), true); // 配置文件路径
 }
 
 Config::~Config() {
@@ -21,7 +24,8 @@ QString Config::getDatabaseHost() const {
 }
 
 QString Config::getDatabaseName() const {
-    return json->getString("database.database_name");
+    QString name = json->getString("database.db_files.selected_db");
+    return resolve(name);
 }
 
 QString Config::getDatabaseUsername() const {
@@ -62,4 +66,14 @@ QStringList Config::getDatabaseSqlFiles() const {
 
 QStringList Config::getQssFiles() const {
     return json->getStringList("qss_files");
+}
+
+QString Config::resolve(QLatin1String relativePath)
+{
+    return CONF_ROOT.arg(relativePath);
+}
+
+QString Config::resolve(const QString &relativePath)
+{
+    return CONF_ROOT.arg(relativePath);
 }

@@ -3,43 +3,40 @@
 #include <QDebug>
 
 Formular::Formular()
+    : QList<Drug>()
 {
 }
 
 Formular::Formular(const QString &formularStr)
-{
-    set(formularStr);
-}
-
-void Formular::set(const QString &formularStr)
+    : QList<Drug>()
 {
     QList<QString> formularList = formularStr.split("|");
     for (const QString &drugStr: formularList) {
-        _formular.append(Formular::toDrug(drugStr));
+        append(Formular::toDrug(drugStr));
     }
     completeDrug();
 }
 
 void Formular::get()
 {
-    qDebug() << _formular;
+    qDebug() << this;
 }
 
 Drug Formular::getDrug(const QModelIndex &idx)
 {
     int i = toListIndex(idx);
-    return _formular.at(i);
+    return at(i);
 }
 
 void Formular::setDrug(const QModelIndex &idx, const Drug &drug)
 {
     int i = toListIndex(idx);
-    _formular.replace(i, drug);
+    replace(i, drug);
 }
 
-int Formular::count()
+int Formular::exactCount()
 {
-    return std::count_if(_formular.cbegin(), _formular.cend(), [](const Drug &drug){ return !drug.isEmpty(); });
+    return std::count_if(cbegin(), cend(), [](const Drug &drug){ return !drug.isEmpty(); });
 }
 
 QPair<int, int> Formular::toRowCol(int i) const
@@ -53,15 +50,14 @@ QPair<int, int> Formular::toRowCol(int i) const
 bool Formular::insertRows(int row, int count)
 {
     int startPos = 4*(row+1);
-    _formular.insert(startPos, 4*count, Drug());
-    get();
+    insert(startPos, 4*count, Drug());
     return true;
 }
 
 bool Formular::removeRows(int row, int count)
 {
     int startPos = 4*row;
-    _formular.remove(startPos, 4*count);
+    remove(startPos, 4*count);
     return true;
 }
 
@@ -82,21 +78,21 @@ void Formular::insertData(QPair<int, int> pos, const QList<Drug> &drugList, cons
     int sub = indexes.indexOf(target);
     int fin_target = target - sub;
 
-    std::for_each(drugList.cbegin(), drugList.cend(), [=](const Drug &drug){ _formular.removeOne(drug); });
-    std::for_each(drugList.crbegin(), drugList.crend(), [=](const Drug &drug){ _formular.insert(fin_target, drug); });
+    std::for_each(drugList.cbegin(), drugList.cend(), [=](const Drug &drug){ removeOne(drug); });
+    std::for_each(drugList.crbegin(), drugList.crend(), [=](const Drug &drug){ insert(fin_target, drug); });
 }
 
 bool Formular::clearItem(const QModelIndex &index)
 {
     int i = toListIndex(index);
-    _formular[i].clear();
+    replace(i, Drug());
     return true;
 }
 
 void Formular::tidy()
 {
-    QList<Drug>::const_iterator it = std::remove(_formular.begin(), _formular.end(), Drug());
-    _formular.erase(it, _formular.end());
+    QList<Drug>::const_iterator it = std::remove(begin(), end(), Drug());
+    erase(it, end());
     completeDrug();
 }
 
@@ -108,7 +104,7 @@ Drug Formular::toDrug(const QString &str)
 
 void Formular::completeDrug()
 {
-    int remainder = _formular.count() % 4;
+    int remainder = count() % 4;
     int completions = (4-remainder) % 4;
-    _formular.insert(_formular.size(), completions, Drug());
+    insert(size(), completions, Drug());
 }

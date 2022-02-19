@@ -1,4 +1,6 @@
 #include "ui/launchwindow.h"
+#include "ui/framelesswindow.h"
+#include "widgets/titlemenubar.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -22,6 +24,10 @@ int main(int argc, char *argv[])
     qApp->setStyleSheet("file:///:/stylesheet/style.qss");
 
     LaunchWindow w;
-    w.show();
+    TitleMenuBar *tb = new TitleMenuBar(w.menuBar(), &w);
+    CFramelessWindow *fw = new CFramelessWindow;
+    fw->makeFrameless(&w, tb, tb->title());
+    tb->setParentWidget(fw);
+    fw->show();
     return a.exec();
 }

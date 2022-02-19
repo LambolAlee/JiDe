@@ -8,7 +8,8 @@
 #include <QKeyEvent>
 #include <QAbstractItemDelegate>
 #include <QMenu>
-#include <QAction>
+
+class QAction;
 
 class FormularTableOfMe : public QTableView
 {
@@ -25,9 +26,10 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void contextMenuEvent(QContextMenuEvent *event) override;
+    void currentChanged(const QModelIndex &idxNow, const QModelIndex &) override;
 
 public slots:
-    inline void insertRow() { insertRow(currentIndex().row()); }
+    void insertRow() { insertRow(currentIndex().row()); }
     void deleteItems();
     void deleteRows();
     void tidy();
@@ -37,26 +39,23 @@ private slots:
     void editItem(const QModelIndex &);
 
 private:
-    DrugEditor *_editor;
+    DrugEditor _editor;
     QModelIndex _editingIndex;
     QTableView::State _state;
     QMenu *_menu;
     QAction *_addRow, *_deleteItems, *_deleteRows;
 
     void commit(const QModelIndex &);
-    void safeCloseEditor(const QModelIndex &);
+    void closeEditor_();
     void commitAndCloseEditor(const QModelIndex &);
 
-    void cancelEdit(const QModelIndex &);
-    inline void startCloseEditor() { setTabKeyNavigation(false); }
-    inline void endCloseEditor() { setTabKeyNavigation(true); }
-    void initEditor(const QModelIndex &idx, QRect rect);
+    void openEditor(const QModelIndex &idx, QRect rect);
     void editPrevItem(const QModelIndex &index);
     void editNextItem(const QModelIndex &index, bool insertion = false);
 
-    inline void insertRow(int row) { if (row < 0) return; model()->insertRow(row); }
+    void insertRow(int row) { if (row < 0) return; model()->insertRow(row); }
 
-    inline int drugCount() {
+    int drugCount() {
         FormularModel *fmodel = static_cast<FormularModel *>(model());
         return fmodel->drugCount();
     }

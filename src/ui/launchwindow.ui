@@ -13,138 +13,26 @@
   <property name="windowTitle">
    <string>RecMed</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="SideBar" name="widget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>70</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>70</width>
-        <height>16777215</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSplitter" name="splitter">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="handleWidth">
-       <number>1</number>
-      </property>
-      <widget class="QStackedWidget" name="funcArea">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <widget class="QWidget" name="page">
-        <layout class="QFormLayout" name="formLayout_2">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item row="0" column="0" colspan="2">
-          <widget class="QTreeView" name="treeView">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QFormLayout" name="formLayout_3">
-        <item row="0" column="0" colspan="2">
-         <widget class="QTabWidget" name="tabWidget">
-          <property name="currentIndex">
-           <number>5</number>
-          </property>
-          <widget class="InfoRecordWidget" name="infoRecTab">
-           <attribute name="title">
-            <string>就诊信息</string>
-           </attribute>
-          </widget>
-          <widget class="StateIllnessWidget" name="stateIllTab">
-           <attribute name="title">
-            <string>病况</string>
-           </attribute>
-          </widget>
-          <widget class="DiagnosisWidget" name="diagnosisTab">
-           <attribute name="title">
-            <string>诊断</string>
-           </attribute>
-          </widget>
-          <widget class="FormularTableForm" name="tcmPrescTab">
-           <attribute name="title">
-            <string>中医处方</string>
-           </attribute>
-          </widget>
-          <widget class="QWidget" name="tab_5">
-           <attribute name="title">
-            <string>西医处方</string>
-           </attribute>
-          </widget>
-          <widget class="QWidget" name="tab_6">
-           <attribute name="title">
-            <string>病史</string>
-           </attribute>
-          </widget>
-          <widget class="ExamineWidget" name="tab_7">
-           <attribute name="title">
-            <string>检查</string>
-           </attribute>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-   </layout>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QDockWidget" name="patientDock">
+   <property name="windowTitle">
+    <string>Patient Info</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2"/>
   </widget>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QDockWidget" name="recordDock">
+   <property name="windowTitle">
+    <string>Record Box</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -153,64 +41,159 @@
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menuRecord">
     <property name="title">
-     <string>文件</string>
+     <string>&amp;Record</string>
     </property>
+    <addaction name="actionNew_Record"/>
+    <addaction name="actionClose_Record"/>
+    <addaction name="actionClose_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="menu_Tool">
     <property name="title">
-     <string>帮助</string>
+     <string>&amp;Tool</string>
     </property>
+    <addaction name="actionImport"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
    </widget>
-   <widget class="QMenu" name="menu_3">
+   <widget class="QMenu" name="menu_View">
     <property name="title">
-     <string>工具</string>
+     <string>&amp;View</string>
     </property>
+    <addaction name="actionPatient_Info"/>
+    <addaction name="actionWidget_Vault"/>
+    <addaction name="actionRecord_Box"/>
+    <addaction name="actionExport_Panel"/>
+    <addaction name="separator"/>
+    <addaction name="actionLock_Dock"/>
+    <addaction name="actionUnlock_Dock"/>
    </widget>
-   <addaction name="menu"/>
-   <addaction name="menu_3"/>
-   <addaction name="menu_2"/>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionRename_Record"/>
+    <addaction name="actionDelete_Record"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionCheck_Update"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_RecMed"/>
+    <addaction name="actionAbout_Qt"/>
+   </widget>
+   <addaction name="menuRecord"/>
+   <addaction name="menu_Edit"/>
+   <addaction name="menu_View"/>
+   <addaction name="menu_Tool"/>
+   <addaction name="menu_Help"/>
   </widget>
+  <widget class="QDockWidget" name="widgetDock">
+   <property name="windowTitle">
+    <string>Widget Vault</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <action name="actionNew_Record">
+   <property name="text">
+    <string>New Record</string>
+   </property>
+  </action>
+  <action name="actionDelete_Record">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionRename_Record">
+   <property name="text">
+    <string>Rename</string>
+   </property>
+  </action>
+  <action name="actionClose_Record">
+   <property name="text">
+    <string>Close Current</string>
+   </property>
+  </action>
+  <action name="actionClose_All">
+   <property name="text">
+    <string>Close All</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="actionPatient_Info">
+   <property name="text">
+    <string>Patient Info</string>
+   </property>
+  </action>
+  <action name="actionWidget_Vault">
+   <property name="text">
+    <string>Widget Vault</string>
+   </property>
+  </action>
+  <action name="actionRecord_Box">
+   <property name="text">
+    <string>Record Box</string>
+   </property>
+  </action>
+  <action name="actionExport_Panel">
+   <property name="text">
+    <string>Export Panel</string>
+   </property>
+  </action>
+  <action name="actionLock_Dock">
+   <property name="text">
+    <string>Lock Dock</string>
+   </property>
+  </action>
+  <action name="actionUnlock_Dock">
+   <property name="text">
+    <string>Unlock Dock</string>
+   </property>
+  </action>
+  <action name="actionAbout_RecMed">
+   <property name="text">
+    <string>About RecMed</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionCheck_Update">
+   <property name="text">
+    <string>Check Update</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>FormularTableForm</class>
-   <extends>QWidget</extends>
-   <header>widgets/formulartableform.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>InfoRecordWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/inforecordwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>StateIllnessWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/stateillnesswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>DiagnosisWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/diagnosiswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ExamineWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/examinewidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SideBar</class>
-   <extends>QWidget</extends>
-   <header>widgets/sidebar.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
