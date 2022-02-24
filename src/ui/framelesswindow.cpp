@@ -73,6 +73,7 @@ void CFramelessWindow::setResizeableAreaWidth(int width)
 
 void CFramelessWindow::makeFrameless(QWidget *w, QWidget *titleBar, QLabel *title)
 {
+    setResizeableAreaWidth(7);
     auto content = new QWidget(this);
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);

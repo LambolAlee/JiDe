@@ -1,13 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>iconfont/export.svg</file>
-        <file>iconfont/patient.svg</file>
-        <file>iconfont/record.svg</file>
-        <file>iconfont/save.svg</file>
-        <file>iconfont/tag.svg</file>
-        <file>iconfont/note.svg</file>
-        <file>iconfont/brush.svg</file>
-        <file>iconfont/logo.svg</file>
+        <file>icon/logo.svg</file>
+        <file>icon/add-row.svg</file>
+        <file>icon/clear.svg</file>
+        <file>icon/delete-item.svg</file>
+        <file>icon/delete-row.svg</file>
+        <file>icon/redo.svg</file>
+        <file>icon/save.svg</file>
+        <file>icon/tidy.svg</file>
+        <file>icon/undo.svg</file>
     </qresource>
     <qresource prefix="/stylesheet">
         <file>style.qss</file>

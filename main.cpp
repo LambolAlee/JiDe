@@ -1,11 +1,10 @@
 #include "ui/launchwindow.h"
 #include "ui/framelesswindow.h"
-#include "widgets/titlemenubar.h"
+#include "ui/titlemenubar.h"
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <QResource>
 
 int main(int argc, char *argv[])
 {

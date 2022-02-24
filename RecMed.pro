@@ -11,6 +11,7 @@ CONFIG += c++20
 INCLUDEPATH += $$PWD/src
 
 include(src/third-party/DBUtil/DBUtil.pri)
+include(src/recordcard/recordcard.pri)
 
 win32 {
     LIBS += -lDwmapi -luser32
@@ -18,36 +19,24 @@ win32 {
 
 SOURCES += \
     main.cpp \
-    src/formular/formular.cpp \
-    src/formular/formularmodel.cpp \
     src/ui/launchwindow.cpp \
-    src/widgets/drugeditor.cpp \
-    src/widgets/examinewidget.cpp \
-    src/widgets/formulartableform.cpp \
-    src/widgets/formulartableofme.cpp \
-    src/widgets/groupeditorwidget.cpp \
+    src/ui/examinewidget.cpp \
+    src/ui/groupeditorwidget.cpp \
     src/ui/framelesswindow.cpp \
-    src/widgets/titlemenubar.cpp
+    src/ui/titlemenubar.cpp
 
 HEADERS += \
-    src/formular/formular.h \
-    src/formular/formularmodel.h \
     src/ui/launchwindow.h \
-    src/widgets/drugeditor.h \
-    src/widgets/examinewidget.h \
-    src/widgets/formulartableform.h \
-    src/widgets/formulartableofme.h \
-    src/widgets/groupeditorwidget.h \
+    src/ui/examinewidget.h \
+    src/ui/groupeditorwidget.h \
     src/ui/framelesswindow.h \
-    src/widgets/titlemenubar.h
+    src/ui/titlemenubar.h
 
 FORMS += \
     src/ui/launchwindow.ui \
-    src/widgets/drugeditor.ui \
-    src/widgets/examinewidget.ui \
-    src/widgets/formulartableform.ui \
-    src/widgets/groupeditorwidget.ui \
-    src/widgets/titlemenubar.ui
+    src/ui/examinewidget.ui \
+    src/ui/groupeditorwidget.ui \
+    src/ui/titlemenubar.ui
 
 TRANSLATIONS += \
     translations/RecMed_zh_CN.ts

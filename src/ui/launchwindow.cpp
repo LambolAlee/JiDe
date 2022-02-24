@@ -1,7 +1,7 @@
 #include "launchwindow.h"
 #include "ui_launchwindow.h"
 
-#include "widgets/formulartableform.h"
+#include "recordcard/formular/ui/formulartablecard.h"
 
 
 LaunchWindow::LaunchWindow(QWidget *parent)
@@ -9,7 +9,7 @@ LaunchWindow::LaunchWindow(QWidget *parent)
     , ui(new Ui::LaunchWindow)
 {
     ui->setupUi(this);
-    FormularTableForm *form = new FormularTableForm(this);
+    FormularTableCard *form = new FormularTableCard(this);
     setCentralWidget(form);
 }
 

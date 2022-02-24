@@ -20,6 +20,9 @@ public:
     void setParentWidget(QWidget *w) { _parentWidget = w; }
     QLabel *title();
 
+protected:
+     //bool eventFilter(QObject *obj, QEvent *ev) override;
+
 private slots:
     void on_minButton_clicked();
     void on_maxButton_clicked();

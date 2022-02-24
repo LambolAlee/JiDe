@@ -13,9 +13,9 @@ DrugEditor::DrugEditor(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_StyledBackground);
     setStyleSheet("DrugEditor{background:#f0f0f0;}");
-    setWindowFlag(Qt::Popup);
+    setWindowFlags(Qt::Popup);
 
-    setDropShadow();
+    //setDropShadow();
 
     ui->drugNameLE->installEventFilter(this);
     ui->weightLE->installEventFilter(this);

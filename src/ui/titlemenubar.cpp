@@ -50,17 +50,19 @@ void TitleMenuBar::on_closeButton_clicked()
 void TitleMenuBar::updateMenuBar()
 {
     if (_menuBar) {
-        _menuBar->hide();
-        for (auto &&action: _menuBar->actions()) {
-            QToolButton *button = new QToolButton(this);
-            button->setAutoRaise(true);
-            button->setProperty("class", "MenuButton");
-            button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-            button->setDefaultAction(action);
-            button->setPopupMode(QToolButton::InstantPopup);
-            button->setStyleSheet("QToolButton::menu-indicator{image:none;}");
-            button->setFocusPolicy(Qt::NoFocus);
-            ui->menuLayout->addWidget(button);
-        }
+        //_menuBar->hide();
+        ui->menuLayout->addWidget(_menuBar);
+        _menuBar->setStyleSheet("QMenuBar{background:transparent; margin-bottom:5px; min-height:27px;}");
+//        for (auto &&action: _menuBar->actions()) {
+//            QToolButton *button = new QToolButton(this);
+//            button->setAutoRaise(true);
+//            button->setProperty("class", "MenuButton");
+//            button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+//            button->setDefaultAction(action);
+//            button->setPopupMode(QToolButton::InstantPopup);
+//            button->setStyleSheet("QToolButton::menu-indicator{image:none;}");
+//            button->setFocusPolicy(Qt::NoFocus);
+//            ui->menuLayout->addWidget(button);
+//        }
     }
 }

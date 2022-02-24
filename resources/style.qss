@@ -1,40 +1,15 @@
-/**======================= SideBar widget customize start =====================*/
-SideBar {
-    background:#d2e4da;
+StatePanel {
+    background: white;
+    border: 1px solid #a6a6a6;
+    border-radius: 18px;
 }
 
-SideBar QToolButton {
-    border-style:solid; background:transparent;
+#undoButton, #redoButton, #submitButton, #cancelButton {
+    background: transparent;
 }
 
-SideBar QToolButton[checkable=true] {
-    border-width:0px 0px 0px 3px;
-    padding-left:4px;
-    padding-right:8px;
-}
-
-SideBar QToolButton[checkable=false] {
-    padding-top:4px;
-    padding-bottom:5px;
-}
-
-SideBar QToolButton:hover {
-    background:rgba(242,247,244,0.4);
-}
-
-SideBar QToolButton:pressed {
-    background:#c2dacd;
-}
-
-SideBar QToolButton[checkable=true]:checked {
-    border-color:white;
-    background:#c2dacd;
-}
-/**======================= SideBar widget customize end =====================*/
-
-/**TabBar 等分tab栏 */
-QTabBar {
-    qproperty-usesScrollButtons:false;
-    qproperty-documentMode:true;
-    qproperty-expanding:true;
+RecordCardFrame {
+    background: #f0eded;
+    border:1px solid #eee8d5;
+    border-radius: 5px;
 }

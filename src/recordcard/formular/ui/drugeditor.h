@@ -5,7 +5,7 @@
 #include <QEvent>
 #include <QAbstractItemDelegate>
 
-#include "formular/formular.h"
+#include "../formular.h"
 
 
 namespace Ui {

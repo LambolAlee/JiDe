@@ -1,14 +1,14 @@
-#include "formulartableofme.h"
+#include "formulartableview.h"
 #include "drugeditor.h"
 
 #include <QCursor>
 #include <QHeaderView>
 
-FormularTableOfMe::FormularTableOfMe(QWidget *parent)
+FormularTableView::FormularTableView(QWidget *parent)
     : QTableView(parent)
 {
-    connect(this, &FormularTableOfMe::doubleClicked, this, &FormularTableOfMe::editItem);
-    connect(this, &FormularTableOfMe::focusInEditor, &_editor, &DrugEditor::focusInEditor);
+    connect(this, &FormularTableView::doubleClicked, this, &FormularTableView::editItem);
+    connect(this, &FormularTableView::focusInEditor, &_editor, &DrugEditor::focusInEditor);
     connect(&_editor, &DrugEditor::editNextWithInsertion, this, [=]{
         finish(_editingIndex, QAbstractItemDelegate::EditNextItem, true);
     });
@@ -17,7 +17,7 @@ FormularTableOfMe::FormularTableOfMe(QWidget *parent)
     });
 }
 
-void FormularTableOfMe::setMenu()
+void FormularTableView::setMenu()
 {
     QList<QAction *> acs = actions();
     _menu = new QMenu(this);
@@ -27,7 +27,14 @@ void FormularTableOfMe::setMenu()
     _deleteRows = acs.at(2);
 }
 
-void FormularTableOfMe::keyPressEvent(QKeyEvent *event)
+void FormularTableView::setModel(QAbstractItemModel *model)
+{
+    _fmodel = static_cast<FormularModel *>(model);
+    _fmodel->setView(this);
+    return QTableView::setModel(model);
+}
+
+void FormularTableView::keyPressEvent(QKeyEvent *event)
 {
     auto key = event->key();
     if (key == Qt::Key_F2) {
@@ -38,7 +45,7 @@ void FormularTableOfMe::keyPressEvent(QKeyEvent *event)
     return QTableView::keyPressEvent(event);
 }
 
-void FormularTableOfMe::contextMenuEvent(QContextMenuEvent *event)
+void FormularTableView::contextMenuEvent(QContextMenuEvent *event)
 {
     QModelIndexList ilist = selectedIndexes();
     if (ilist.isEmpty()) {
@@ -54,24 +61,29 @@ void FormularTableOfMe::contextMenuEvent(QContextMenuEvent *event)
     _menu->exec(event->globalPos());
 }
 
-void FormularTableOfMe::currentChanged(const QModelIndex &idxNow, const QModelIndex &idxPrev)
+void FormularTableView::currentChanged(const QModelIndex &idxNow, const QModelIndex &idxPrev)
 {
-    if (_state == FormularTableOfMe::EditingState && idxNow != _editingIndex) {
-        _state = FormularTableOfMe::NoState;
+    if (_state == FormularTableView::EditingState && idxNow != _editingIndex) {
+        _state = FormularTableView::NoState;
         commit(_editingIndex);
     }
     return QTableView::currentChanged(idxNow, idxPrev);
 }
 
-void FormularTableOfMe::deleteItems()
+void FormularTableView::updateDrugCount()
 {
-    FormularModel *fmodel = static_cast<FormularModel *>(model());
-    fmodel->clearItems(selectedIndexes());
-    emit drugCountChanged(fmodel->drugCount());
+    emit drugCountChanged(_fmodel->drugCount());
 }
 
-void FormularTableOfMe::deleteRows()
+void FormularTableView::deleteItems()
 {
+    auto *cmd = new DeleteDrug(_fmodel, selectedIndexes());
+    emit operateWith(cmd);
+}
+
+void FormularTableView::deleteRows()
+{
+    // wait to be replaced with the undo command
     int previous = -1;
     auto sList = selectedIndexes();
     if (sList.isEmpty()) return;
@@ -80,16 +92,16 @@ void FormularTableOfMe::deleteRows()
         previous = index.row();
         model()->removeRow(previous);
     });
-    emit drugCountChanged(drugCount());
+    emit drugCountChanged(_fmodel->drugCount());
 }
 
-void FormularTableOfMe::tidy()
+void FormularTableView::tidy()
 {
-    FormularModel *fmodel = static_cast<FormularModel *>(model());
-    fmodel->tidy();
+    // wait to be replaced with the undo command
+    _fmodel->tidy();
 }
 
-void FormularTableOfMe::editPrevItem(const QModelIndex &index)
+void FormularTableView::editPrevItem(const QModelIndex &index)
 {
     int column = index.column();
     int row = index.row();
@@ -103,7 +115,7 @@ void FormularTableOfMe::editPrevItem(const QModelIndex &index)
     editItem(idx);
 }
 
-void FormularTableOfMe::editNextItem(const QModelIndex &index, bool insertion)
+void FormularTableView::editNextItem(const QModelIndex &index, bool insertion)
 {
     int arow, row, acolumn, column;
     arow = row = index.row(); acolumn = column = index.column();
@@ -121,7 +133,13 @@ void FormularTableOfMe::editNextItem(const QModelIndex &index, bool insertion)
     editItem(idx);
 }
 
-void FormularTableOfMe::finish(const QModelIndex &index, QAbstractItemDelegate::EndEditHint hint, bool insertion)
+void FormularTableView::insertRow(int row)
+{
+    auto *cmd = new AddNewRow(_fmodel, row);
+    emit operateWith(cmd);
+}
+
+void FormularTableView::finish(const QModelIndex &index, QAbstractItemDelegate::EndEditHint hint, bool insertion)
 {
     switch (hint) {
     case QAbstractItemDelegate::EditNextItem: {
@@ -140,40 +158,44 @@ void FormularTableOfMe::finish(const QModelIndex &index, QAbstractItemDelegate::
     default:
         break;
     }
-    emit drugCountChanged(drugCount());
+    emit drugCountChanged(_fmodel->drugCount());
 }
 
-void FormularTableOfMe::openEditor(const QModelIndex &idx, QRect rect)
+// =====================================Editor related code here==========================================
+void FormularTableView::openEditor(const QModelIndex &idx, QRect rect)
 {
     _editor.fitViewItemHeight(rect.height());
     _editor.setFixedWidth(rect.width());
     _editor.move(mapToGlobal(QPoint(rect.x() + verticalHeader()->width(), rect.y())));
     _editor.setDrug(idx.model()->data(idx, Qt::EditRole).value<Drug>());
     _editor.show();
+    _editor.activateWindow(); // use this to enable chinese imput on windows which have windowflag Qt::Popup
 }
 
-void FormularTableOfMe::editItem(const QModelIndex &idx)
+void FormularTableView::editItem(const QModelIndex &idx)
 {
     QRect rect = visualRect(idx);
-    _state = FormularTableOfMe::EditingState;
+    _state = FormularTableView::EditingState;
     _editingIndex = idx;
     openEditor(idx, rect);
 
     emit focusInEditor();
 }
 
-void FormularTableOfMe::commit(const QModelIndex &index)
+void FormularTableView::commit(const QModelIndex &index)
 {
-    model()->setData(index, _editor.submitDrug());
+    Drug old = index.data(Qt::EditRole).value<Drug>();
+    auto *cmd = new UpdateDrug(_fmodel, index, _editor.submitDrug(), old);
+    emit operateWith(cmd);
 }
 
-void FormularTableOfMe::closeEditor_()
+void FormularTableView::closeEditor_()
 {
-    _state = FormularTableOfMe::NoState;
+    _state = FormularTableView::NoState;
     _editor.close();
 }
 
-void FormularTableOfMe::commitAndCloseEditor(const QModelIndex &index)
+void FormularTableView::commitAndCloseEditor(const QModelIndex &index)
 {
     commit(index);
     closeEditor_();

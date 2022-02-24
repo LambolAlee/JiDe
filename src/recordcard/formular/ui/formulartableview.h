@@ -1,8 +1,9 @@
-#ifndef FORMULARTABLEOFME_H
-#define FORMULARTABLEOFME_H
+#ifndef FORMULARTABLEVIEW_H
+#define FORMULARTABLEVIEW_H
 
 #include "drugeditor.h"
-#include "formular/formularmodel.h"
+#include "../formularmodel.h"
+#include "../command/basiccommand.h"
 
 #include <QTableView>
 #include <QKeyEvent>
@@ -11,17 +12,22 @@
 
 class QAction;
 
-class FormularTableOfMe : public QTableView
+class FormularTableView : public QTableView
 {
     Q_OBJECT
 
 signals:
     void focusInEditor();
     void drugCountChanged(int count);
+    void operateWith(QUndoCommand *cmd);
 
 public:
-    FormularTableOfMe(QWidget *parent = nullptr);
+    FormularTableView(QWidget *parent = nullptr);
     void setMenu();
+    void setModel(QAbstractItemModel *model) override;
+    FormularModel *model() { return _fmodel; }
+
+    void updateDrugCount();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -44,6 +50,7 @@ private:
     QTableView::State _state;
     QMenu *_menu;
     QAction *_addRow, *_deleteItems, *_deleteRows;
+    FormularModel *_fmodel;
 
     void commit(const QModelIndex &);
     void closeEditor_();
@@ -53,12 +60,7 @@ private:
     void editPrevItem(const QModelIndex &index);
     void editNextItem(const QModelIndex &index, bool insertion = false);
 
-    void insertRow(int row) { if (row < 0) return; model()->insertRow(row); }
-
-    int drugCount() {
-        FormularModel *fmodel = static_cast<FormularModel *>(model());
-        return fmodel->drugCount();
-    }
+    void insertRow(int row);
 };
 
-#endif // FORMULARTABLEOFME_H
+#endif // FORMULARTABLEVIEW_H
