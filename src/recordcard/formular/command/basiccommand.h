@@ -16,6 +16,7 @@ protected:
     FormularModel *_model;
 };
 
+// ======================================Add New Row Command===============================================
 class AddNewRow : public BasicCommand
 {
 public:
@@ -27,6 +28,7 @@ private:
     int _row;
 };
 
+// =====================================Update Drug Command================================================
 class UpdateDrug: public BasicCommand
 {
 public:
@@ -39,17 +41,41 @@ private:
     QPair<Drug, Drug> _data;
 };
 
+// ======================================Delete Drug Command================================================
 class DeleteDrug: public BasicCommand
 {
 public:
     DeleteDrug(FormularModel *model, const QModelIndexList &indexs);
-    ~DeleteDrug();
     void undo() override;
     void redo() override;
 
 private:
     QModelIndexList _l;
-    QList<Drug> *_drugs;
+    QList<Drug> _drugs;
+};
+
+// =======================================Tidy Command=====================================================
+class TidyCommand: public BasicCommand
+{
+public:
+    TidyCommand(FormularModel *model);
+    void undo() override;
+    void redo() override;
+
+private:
+    DrugLayout _layout;
+};
+
+// =======================================Delete Drug Rows Command=========================================
+class DeleteRows: public BasicCommand
+{
+public:
+    DeleteRows(FormularModel *model, const QModelIndexList &list);
+    void undo() override;
+    void redo() override;
+
+private:
+    QMap<int, QList<Drug>> _modifier;
 };
 
 #endif // BASICCOMMAND_H

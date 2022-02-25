@@ -6,6 +6,7 @@
 #include <QPair>
 
 using Drug = QList<QString>;
+using DrugLayout = QList<qint8>;
 
 class Formular : private QList<Drug>
 {
@@ -21,7 +22,7 @@ public:
     void setDrug(const QModelIndex &, const Drug &);
     void setDrug(QString);
 
-    int toListIndex(int row, int column) { return 4*row + column; }
+    int toListIndex(int row, int column) { return columnCount*row + column; }
     int toListIndex(const QModelIndex &idx) { return toListIndex(idx.row(), idx.column()); }
     int toListIndex(QPair<int, int> pos) { return toListIndex(pos.first, pos.second); }
     int exactCount();
@@ -36,12 +37,18 @@ public:
     bool clearItem(const QModelIndex &);
 
     void tidy();
+    bool needTidy();
 
     static Drug toDrug(const QString &);
     static QString toString(const Drug &drug) { return drug.join(" "); }
 
+    DrugLayout layout();
+    void completeWithLayout(const DrugLayout &layout);
+
 private:
+    static const int columnCount = 4;
     void completeDrug();
+    int completions();
 };
 
 #endif // FORMULAR_H

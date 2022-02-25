@@ -19,23 +19,26 @@ win32 {
 
 SOURCES += \
     main.cpp \
-    src/ui/launchwindow.cpp \
     src/ui/examinewidget.cpp \
     src/ui/groupeditorwidget.cpp \
     src/ui/framelesswindow.cpp \
+    src/ui/patientinfodock.cpp \
+    src/ui/recordmanager.cpp \
     src/ui/titlemenubar.cpp
 
 HEADERS += \
-    src/ui/launchwindow.h \
     src/ui/examinewidget.h \
     src/ui/groupeditorwidget.h \
     src/ui/framelesswindow.h \
+    src/ui/patientinfodock.h \
+    src/ui/recordmanager.h \
     src/ui/titlemenubar.h
 
 FORMS += \
-    src/ui/launchwindow.ui \
     src/ui/examinewidget.ui \
     src/ui/groupeditorwidget.ui \
+    src/ui/patientinfodock.ui \
+    src/ui/recordmanager.ui \
     src/ui/titlemenubar.ui
 
 TRANSLATIONS += \

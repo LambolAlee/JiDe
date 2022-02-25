@@ -178,3 +178,36 @@ void FormularModel::tidy()
     _formular->tidy();
     endResetModel();
 }
+
+bool FormularModel::needTidy()
+{
+    return _formular->needTidy();
+}
+
+DrugLayout FormularModel::layout()
+{
+    return _formular->layout();
+}
+
+void FormularModel::refillWith(const DrugLayout &layout)
+{
+    beginResetModel();
+    _formular->completeWithLayout(layout);
+    endResetModel();
+}
+
+QList<Drug> FormularModel::getDrugsInRow(int row)
+{
+    QList<Drug> list;
+    int c = columnCount();
+    for (int i = 0; i < c; ++i)
+        list << data(index(row, i), Qt::EditRole).value<Drug>();
+    return list;
+}
+
+void FormularModel::setRowDrugs(int row, const QList<Drug> &drugs)
+{
+    int c = columnCount();
+    for (int i = 0; i < c; ++i)
+        setData(index(row, i), drugs.at(i));
+}

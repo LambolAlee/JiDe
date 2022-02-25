@@ -8,7 +8,6 @@ LEDButton::LEDButton(QWidget *parent)
     : QAbstractButton(parent)
 {
     setCheckable(true);
-    setFixedSize(32,32);
     connect(this, &LEDButton::toggled, this, &LEDButton::updateChecked);
 }
 

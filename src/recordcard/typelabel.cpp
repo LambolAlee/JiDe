@@ -18,7 +18,7 @@ void TypeLabel::setText(const QString &text)
 {
     _text = text;
     QFont f;
-    f.setPointSize(11);
+    f.setPointSize(10);
     QFontMetrics fm(f);
     int h = fm.height();
     int w = fm.horizontalAdvance(_text);
@@ -50,7 +50,7 @@ void TypeLabel::paintEvent(QPaintEvent *)
     painter.drawPolygon(polygon);
     QRect labelArea(QPoint(mx, my), QPoint(w-h/2, h-my));
     QFont f;
-    f.setPointSize(11);
+    f.setPointSize(10);
     painter.setFont(f);
     painter.drawText(labelArea, Qt::AlignCenter, _text);
 }

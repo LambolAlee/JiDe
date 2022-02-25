@@ -42,22 +42,22 @@ int Formular::exactCount()
 QPair<int, int> Formular::toRowCol(int i) const
 {
     int row, column;
-    row = i / 4;
-    column = i % 4;
+    row = i / columnCount;
+    column = i % columnCount;
     return QPair<int, int>(row, column);
 }
 
 bool Formular::insertRows(int row, int count)
 {
-    int startPos = 4*(row+1);
-    insert(startPos, 4*count, Drug());
+    int startPos = columnCount*(row+1);
+    insert(startPos, columnCount*count, Drug());
     return true;
 }
 
 bool Formular::removeRows(int row, int count)
 {
-    int startPos = 4*row;
-    remove(startPos, 4*count);
+    int startPos = columnCount*row;
+    remove(startPos, columnCount*count);
     return true;
 }
 
@@ -90,10 +90,16 @@ bool Formular::clearItem(const QModelIndex &index)
 }
 
 void Formular::tidy()
-{
-    QList<Drug>::const_iterator it = std::remove(begin(), end(), Drug());
-    erase(it, end());
+{  
+    removeAll(Drug());
     completeDrug();
+}
+
+bool Formular::needTidy()
+{
+    int blank = count(Drug());
+    if (blank < columnCount) return false;
+    else return true;
 }
 
 Drug Formular::toDrug(const QString &str)
@@ -102,9 +108,33 @@ Drug Formular::toDrug(const QString &str)
     else return str.split(" ");
 }
 
+void Formular::completeWithLayout(const DrugLayout &layout)
+{
+    for (int i=0; i < layout.size(); ++i) {
+        if (layout.at(i)) continue;
+        insert(i, Drug());
+    }
+}
+
+DrugLayout Formular::layout()
+{
+    DrugLayout layout;
+    for (auto &&drug: *this) {
+        if (drug.isEmpty()) layout << 0;
+        else layout << 1;
+    }
+    return layout.mid(0, layout.size()-completions()-2);
+}
+
+int Formular::completions()
+{
+    int remainder = count() % columnCount;
+    int comp = (4-remainder) % columnCount;
+    return comp;
+}
+
 void Formular::completeDrug()
 {
-    int remainder = count() % 4;
-    int completions = (4-remainder) % 4;
-    insert(size(), completions, Drug());
+    int comp = completions();
+    insert(size(), comp, Drug());
 }

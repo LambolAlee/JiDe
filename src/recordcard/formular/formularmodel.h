@@ -34,10 +34,18 @@ public:
     bool clearItems(const QModelIndexList &indexs);
     bool clearItems(const QList<QPersistentModelIndex> &indexs);
     inline int drugCount() { return _formular->exactCount(); }
+
     void tidy();
+    bool needTidy();
 
     FormularTableView *view() { return _view; };
     void setView(FormularTableView *view) { _view = view; };
+
+    DrugLayout layout();
+    void refillWith(const DrugLayout &layout);
+
+    QList<Drug> getDrugsInRow(int row);
+    void setRowDrugs(int row, const QList<Drug> &drugs);
 
 private:
     FormularTableView *_view;

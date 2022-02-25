@@ -9,7 +9,9 @@ RecordCardFrame::RecordCardFrame(QWidget *parent)
 {
     ui->setupUi(this);
     _statePanel = new StatePanel(this);
-    _typeLabel = new TypeLabel(this);
+    _typeLabel = new QPushButton(this);
+    _typeLabel->setIcon(QIcon(":/icon/typelabel.svg"));
+    _typeLabel->setProperty("class", "TypeLabel");
     delete ui->cardTitleLayout->replaceWidget(ui->labelWidget, _typeLabel);
     delete ui->cardTitleLayout->replaceWidget(ui->statePanelWidget, _statePanel);
 

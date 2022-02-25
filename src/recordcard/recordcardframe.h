@@ -2,6 +2,7 @@
 #define RECORDCARDFRAME_H
 
 #include <QWidget>
+#include <QPushButton>
 
 #include "typelabel.h"
 #include "statepanel.h"
@@ -39,7 +40,7 @@ protected slots:
 
 private:
     Ui::RecordCardFrame *ui;
-    TypeLabel *_typeLabel;
+    QPushButton *_typeLabel;
     StatePanel *_statePanel;
     RecordCardBody *_body;
 };

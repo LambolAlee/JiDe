@@ -1,7 +1,26 @@
+LEDButton {
+    min-height: 26px;
+    min-width: 26px;
+}
+
+.TypeLabel {
+    padding-left: 3px;
+    padding-right: 3px;
+    min-height: 20px;
+    background: rgba(135,206,250, 60%);
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.TypeLabel:hover { background: rgba(135, 206, 250, 80%); }
+.TypeLabel:pressed { background: rgba(135,206,250, 1); }
+
 StatePanel {
     background: white;
     border: 1px solid #a6a6a6;
-    border-radius: 18px;
+    min-height: 28px;
+    border-radius: 15px;
 }
 
 #undoButton, #redoButton, #submitButton, #cancelButton {

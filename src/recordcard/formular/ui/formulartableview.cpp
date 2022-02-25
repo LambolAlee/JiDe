@@ -83,33 +83,25 @@ void FormularTableView::deleteItems()
 
 void FormularTableView::deleteRows()
 {
-    // wait to be replaced with the undo command
-    int previous = -1;
-    auto sList = selectedIndexes();
-    if (sList.isEmpty()) return;
-    std::for_each(sList.crbegin(), sList.crend(), [&](const QModelIndex &index) {
-        if (index.row() == previous) return;
-        previous = index.row();
-        model()->removeRow(previous);
-    });
-    emit drugCountChanged(_fmodel->drugCount());
+    auto *cmd = new DeleteRows(_fmodel, selectedIndexes());
+    emit operateWith(cmd);
 }
 
 void FormularTableView::tidy()
 {
-    // wait to be replaced with the undo command
-    _fmodel->tidy();
+    auto *cmd = new TidyCommand(_fmodel);
+    emit operateWith(cmd);
 }
 
 void FormularTableView::editPrevItem(const QModelIndex &index)
 {
     int column = index.column();
+    if (column -1 < 0) column = _fmodel->columnCount()-1; else --column;
     int row = index.row();
-    if (column == 0) {
+    if (column == _fmodel->columnCount()-1) { // column == columnCount-1 means it has reached the beginning of the current row
         if (row == 0) row = model()->rowCount()-1;
-        else row -= 1;
-        column = 3;
-    } else column -= 1;
+        else --row;
+    }
     QModelIndex idx = index.sibling(row, column);
     setCurrentIndex(idx);
     editItem(idx);
@@ -117,18 +109,18 @@ void FormularTableView::editPrevItem(const QModelIndex &index)
 
 void FormularTableView::editNextItem(const QModelIndex &index, bool insertion)
 {
-    int arow, row, acolumn, column;
-    arow = row = index.row(); acolumn = column = index.column();
+    int rowCount = _fmodel->rowCount();
+    int columnCount = _fmodel->columnCount();
+    int column = (index.column() + 1) % columnCount;
 
-    if (column == 3) {
-        arow += 1;
-        if (row == model()->rowCount()-1) {
-            if (insertion) insertRow(row);
-            else arow = 0;
-        }
-        acolumn = 0;
-    } else acolumn += 1;
-    QModelIndex idx = model()->index(arow, acolumn);
+    int row = index.row();
+    if (!column) { // column == 0 means it has reached the end of the current row
+        if (row == rowCount-1) {
+            if (insertion) { insertRow(row); row = rowCount; }
+            else row = 0;
+        } else ++row;
+    }
+    QModelIndex idx = _fmodel->index(row, column);
     setCurrentIndex(idx);
     editItem(idx);
 }

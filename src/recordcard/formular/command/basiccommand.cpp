@@ -67,22 +67,14 @@ DeleteDrug::DeleteDrug(FormularModel *model, const QModelIndexList &indexs)
         return;
     }
     _l = indexs;
-    _drugs = new QList<Drug>();
     for (auto &&idx: indexs)
-        _drugs->append(idx.data(Qt::EditRole).value<Drug>());
-}
-
-DeleteDrug::~DeleteDrug()
-{
-    _drugs->clear();
-    delete _drugs;
-    _drugs = nullptr;
+        _drugs.append(idx.data(Qt::EditRole).value<Drug>());
 }
 
 void DeleteDrug::undo()
 {
     for (int i=0; i < _l.size(); ++i) {
-        _model->setData(_l.at(i), _drugs->at(i));
+        _model->setData(_l.at(i), _drugs.at(i));
     }
     _model->view()->updateDrugCount();
 }
@@ -90,5 +82,56 @@ void DeleteDrug::undo()
 void DeleteDrug::redo()
 {
     _model->clearItems(_l);
+    _model->view()->updateDrugCount();
+}
+
+// =======================================Tidy Command=====================================================
+TidyCommand::TidyCommand(FormularModel *model)
+    : BasicCommand(model)
+{
+    if (!_model->needTidy())
+        setObsolete(true);
+}
+
+void TidyCommand::undo()
+{
+    _model->refillWith(_layout);
+}
+
+void TidyCommand::redo()
+{
+    _layout = _model->layout();
+    _model->tidy();
+}
+
+// =======================================Delete Drug Rows Command=========================================
+DeleteRows::DeleteRows(FormularModel *model, const QModelIndexList &list)
+    : BasicCommand(model)
+{
+    if (list.isEmpty()) {
+        setObsolete(true);
+        return;
+    }
+    int previous = -1;
+    for (auto &&i: list) {
+        if (i.row() == previous) continue;
+        previous = i.row();
+        _modifier.insert(previous, _model->getDrugsInRow(previous));
+    }
+}
+
+void DeleteRows::undo()
+{
+    std::for_each(_modifier.constKeyValueBegin(), _modifier.constKeyValueEnd(), [=](auto pair){
+        _model->insertRow(pair.first-1); // the inserRows method in FormularModel inserts new rows after the specific `row`
+        _model->setRowDrugs(pair.first, pair.second);
+    });
+    _model->view()->updateDrugCount();
+}
+
+void DeleteRows::redo()
+{
+    auto iList = _modifier.keys();
+    std::for_each(iList.crbegin(), iList.crend(), [=](int row){ _model->removeRow(row); });
     _model->view()->updateDrugCount();
 }

@@ -1,4 +1,4 @@
-#include "ui/launchwindow.h"
+#include "ui/recordmanager.h"
 #include "ui/framelesswindow.h"
 #include "ui/titlemenubar.h"
 
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     qApp->setStyleSheet("file:///:/stylesheet/style.qss");
 
-    LaunchWindow w;
+    RecordManager w;
     TitleMenuBar *tb = new TitleMenuBar(w.menuBar(), &w);
     CFramelessWindow *fw = new CFramelessWindow;
     fw->makeFrameless(&w, tb, tb->title());
