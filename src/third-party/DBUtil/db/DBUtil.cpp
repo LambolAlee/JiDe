@@ -22,6 +22,11 @@ bool DBUtil::update(const QString &sql, const QVariantMap &params) {
     return result;
 }
 
+bool DBUtil::delete_(const QString &sql, const QVariantMap &params)
+{
+    return update(sql, params);
+}
+
 int DBUtil::selectInt(const QString &sql, const QVariantMap &params) {
     return selectVariant(sql, params).toInt();
 }

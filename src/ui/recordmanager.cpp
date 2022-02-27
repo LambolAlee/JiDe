@@ -12,7 +12,9 @@ RecordManager::RecordManager(QWidget *parent)
     ui->setupUi(this);
     FormularTableCard *form = new FormularTableCard(this);
     setCentralWidget(form);
-    ui->patientDock->setWidget(new PatientInfoDock(this));
+    auto *pinfo = new PatientInfoDock(this);
+    pinfo->setById(1);
+    ui->patientDock->setWidget(pinfo);
 }
 
 RecordManager::~RecordManager()

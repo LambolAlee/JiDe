@@ -82,12 +82,17 @@ QSqlDatabase ConnectionPool::openConnection(const QString &connectionName) {
         // [3] 如果连接不存在，则创建连接
         if (qApp != nullptr) {
             // [4] 线程结束时，释放在此线程中创建的数据库连接
-            QObject::connect(QThread::currentThread(), &QThread::finished, qApp, [fullConnectionName] {
+            auto callback = [fullConnectionName] {
                 if (QSqlDatabase::contains(fullConnectionName)) {
                     QSqlDatabase::removeDatabase(fullConnectionName);
                     qDebug().noquote() << QString("Connection deleted: %1").arg(fullConnectionName);
                 }
-            });
+            };
+            if (QThread::currentThread() == qApp->thread()) {
+                QObject::connect(qApp, &QCoreApplication::aboutToQuit, callback);
+            } else {
+                QObject::connect(QThread::currentThread(), &QThread::finished, qApp, callback);
+            }
         }
 
         return createConnection(fullConnectionName);

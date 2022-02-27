@@ -10,7 +10,7 @@ class Patient
 public:
     int id;
     QString patient_name;
-    bool sex;
+    int sex;
     int flag;
     QDate birthday;
     int ethnicity;

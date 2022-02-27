@@ -19,18 +19,22 @@ win32 {
 
 SOURCES += \
     main.cpp \
+    src/patient/patientinfo.cpp \
     src/ui/examinewidget.cpp \
     src/ui/groupeditorwidget.cpp \
     src/ui/framelesswindow.cpp \
     src/ui/patientinfodock.cpp \
+    src/ui/recordeditorarea.cpp \
     src/ui/recordmanager.cpp \
     src/ui/titlemenubar.cpp
 
 HEADERS += \
+    src/patient/patientinfo.h \
     src/ui/examinewidget.h \
     src/ui/groupeditorwidget.h \
     src/ui/framelesswindow.h \
     src/ui/patientinfodock.h \
+    src/ui/recordeditorarea.h \
     src/ui/recordmanager.h \
     src/ui/titlemenubar.h
 

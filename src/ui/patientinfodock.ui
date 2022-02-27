@@ -17,7 +17,7 @@
    <item row="1" column="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="showPage">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -359,9 +359,15 @@
              </item>
              <item>
               <widget class="QToolButton" name="resetNameBtn">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -400,9 +406,15 @@
              </item>
              <item>
               <widget class="QToolButton" name="resetSexBtn">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -420,13 +432,25 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QComboBox" name="ethnicCB"/>
+              <widget class="QComboBox" name="ethnicCB">
+               <item>
+                <property name="text">
+                 <string>Han</string>
+                </property>
+               </item>
+              </widget>
              </item>
              <item>
               <widget class="QToolButton" name="resetEthnicBtn">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -448,9 +472,15 @@
              </item>
              <item>
               <widget class="QToolButton" name="resetCareerBtn">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -472,9 +502,15 @@
              </item>
              <item>
               <widget class="QToolButton" name="resetBpBtn">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -496,9 +532,15 @@
              </item>
              <item>
               <widget class="QToolButton" name="resetNpBtn">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -535,10 +577,16 @@
     </widget>
    </item>
   </layout>
+  <action name="actionReset">
+   <property name="text">
+    <string>reset</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
   <buttongroup name="sexGroup"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

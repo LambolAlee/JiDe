@@ -56,6 +56,7 @@ public:
      * @return 如没有错误返回 true， 有错误返回 false.
      */
     static bool update(const QString &sql, const QVariantMap &params = QVariantMap());
+    static bool delete_(const QString &sql, const QVariantMap &params = QVariantMap());
 
     /**
      * 执行查询语句，查询到一条记录，并把其映射成 map: key 是列名，value 是列值.

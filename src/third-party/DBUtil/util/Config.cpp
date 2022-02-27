@@ -3,9 +3,9 @@
 
 #include <QString>
 #include <QStringList>
+#include <QApplication>
 
-extern const QLatin1String CONF_ROOT(".recmed/%1");
-
+extern const QLatin1String CONF_ROOT("%1/.recmed/%2");
 
 Config::Config() {
     json = new Json(resolve(QLatin1String("config.json")), true); // 配置文件路径
@@ -70,10 +70,12 @@ QStringList Config::getQssFiles() const {
 
 QString Config::resolve(QLatin1String relativePath)
 {
-    return CONF_ROOT.arg(relativePath);
+    static QString rootPath = QApplication::applicationDirPath();
+    return CONF_ROOT.arg(rootPath, relativePath);
 }
 
 QString Config::resolve(const QString &relativePath)
 {
-    return CONF_ROOT.arg(relativePath);
+    static QString rootPath = QApplication::applicationDirPath();
+    return CONF_ROOT.arg(rootPath, relativePath);
 }
