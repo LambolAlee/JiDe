@@ -1,4 +1,4 @@
-QT += core xml sql
+QT += xml sql
 
 CONFIG += c++20
 

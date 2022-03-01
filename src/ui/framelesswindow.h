@@ -73,6 +73,9 @@ private:
 #include <QMouseEvent>
 #include <QResizeEvent>
 #include <QPoint>
+
+// ***Not used under macOS because the frameless can't save the ugly window***
+
 class CFramelessWindow : public QMainWindow
 {
     Q_OBJECT

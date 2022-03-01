@@ -25,7 +25,7 @@ void LEDButton::paintEvent(QPaintEvent *)
     int h = height();
 
     QPoint center(w/2, h/2);
-    int radius = __min(w, h)/2 - _penWidth/2;
+    int radius = qMin(w, h)/2 - _penWidth/2;
 
     painter.drawEllipse(center, radius, radius);
 

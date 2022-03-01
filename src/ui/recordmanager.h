@@ -3,19 +3,15 @@
 
 #include <QMainWindow>
 
+#ifdef Q_OS_WIN
 #include "framelesswindow.h"
+#endif// Q_OS_WIN
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class RecordManager; }
 QT_END_NAMESPACE
 
-#ifdef Q_OS_MAC
-class RecordManager : public CFramelessWindow
-#endif// Q_OS_MAC
-
-#ifdef Q_OS_WIN
 class RecordManager : public QMainWindow
-#endif// Q_OS_WIN
 {
     Q_OBJECT
 

@@ -13,14 +13,14 @@ INCLUDEPATH += $$PWD/src
 include(src/third-party/DBUtil/DBUtil.pri)
 include(src/recordcard/recordcard.pri)
 
-win32 {
+win32{
     LIBS += -lDwmapi -luser32
     SOURCES += src/ui/framelesswindow.cpp
+    HEADERS += src/ui/framelesswindow.h
 }
 
 macx{
-    OBJECTIVE_SOURCES += framelesswindow.mm
-    LIBS += -framework Cocoa
+    CONFIG -= app_bundle
 }
 
 SOURCES += \
@@ -39,7 +39,6 @@ HEADERS += \
     src/patient/patientinfo.h \
     src/ui/examinewidget.h \
     src/ui/groupeditorwidget.h \
-    src/ui/framelesswindow.h \
     src/ui/patientinfodock.h \
     src/ui/recordeditorarea.h \
     src/ui/recordmanager.h \
