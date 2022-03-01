@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "dao/patientdao.h"
+#include "patient/patientconst.h"
 
 class PatientInfo : public QObject
 {
@@ -19,6 +20,11 @@ public:
 
     QString name() const { return _patient.patient_name; }
     int sex() const { return _patient.sex; }
+    QDate birthday() const { return _patient.birthday; }
+    int ethnicity() const { return _patient.ethnicity; }
+    QString career() const { return _patient.career; }
+    QString birthPlace() const { return _patient.birth_place; }
+    QString nativePlace() const { return _patient.native_place; }
 
 private:
     Patient _patient;

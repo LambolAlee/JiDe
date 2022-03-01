@@ -19,7 +19,7 @@ public:
     bool deletePatient(int id);
 
 private:
-    QCache<QString, Patient> _userCache;
+    QCache<int, Patient> _userCache;
     QCache<QString, int> _indexCache;
 
     static Patient *mapToPatient(const QVariantMap &rowMap);
@@ -28,6 +28,9 @@ private:
     QString buildIndex(const QString &patient_name, int sex, int flag);
 
     QStringList findIndexById(int id);
+
+// --------------------------------------Cache Operation-----------------------------------------------
     void insertIntoCache(const QString &idxKey, Patient *p);
+    void removeFromCache(const QString &idxKey, int id);
 };
 #endif // PATIENTDAO_H

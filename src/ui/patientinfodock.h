@@ -28,7 +28,8 @@ private:
     Ui::PatientInfoDock *ui;
     PatientInfo _info;
 
-    void updateUi();
+    void updateEditArea();
+    void updateShowArea();
 };
 
 #endif // PATIENTINFODOCK_H

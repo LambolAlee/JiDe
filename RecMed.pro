@@ -15,20 +15,27 @@ include(src/recordcard/recordcard.pri)
 
 win32 {
     LIBS += -lDwmapi -luser32
+    SOURCES += src/ui/framelesswindow.cpp
+}
+
+macx{
+    OBJECTIVE_SOURCES += framelesswindow.mm
+    LIBS += -framework Cocoa
 }
 
 SOURCES += \
     main.cpp \
+    src/patient/patientconst.cpp \
     src/patient/patientinfo.cpp \
     src/ui/examinewidget.cpp \
     src/ui/groupeditorwidget.cpp \
-    src/ui/framelesswindow.cpp \
     src/ui/patientinfodock.cpp \
     src/ui/recordeditorarea.cpp \
     src/ui/recordmanager.cpp \
     src/ui/titlemenubar.cpp
 
 HEADERS += \
+    src/patient/patientconst.h \
     src/patient/patientinfo.h \
     src/ui/examinewidget.h \
     src/ui/groupeditorwidget.h \

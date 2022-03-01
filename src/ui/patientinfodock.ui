@@ -17,7 +17,7 @@
    <item row="1" column="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="showPage">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -97,14 +97,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_8">
+                <widget class="QLabel" name="nameLabel">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -129,14 +129,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_10">
+                <widget class="QLabel" name="sexLabel">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -161,14 +161,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_12">
+                <widget class="QLabel" name="ethnicLabel">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -193,14 +193,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_14">
+                <widget class="QLabel" name="careerLabel">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -225,14 +225,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_16">
+                <widget class="QLabel" name="birthPlaceLabel">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -257,14 +257,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_18">
+                <widget class="QLabel" name="nativePlaceLabel">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -432,13 +432,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QComboBox" name="ethnicCB">
-               <item>
-                <property name="text">
-                 <string>Han</string>
-                </property>
-               </item>
-              </widget>
+              <widget class="QComboBox" name="ethnicCB"/>
              </item>
              <item>
               <widget class="QToolButton" name="resetEthnicBtn">

@@ -32,9 +32,8 @@ Patient *PatientDao::mapToPatient(const QVariantMap &rowMap)
 
 Patient PatientDao::findByPatientId(int id)
 {
-    QString key = QString::number(id);
-    if (_userCache.contains(key)) {
-        return *_userCache.object(key);
+    if (_userCache.contains(id)) {
+        return *_userCache.object(id);
     }
 
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
@@ -48,7 +47,7 @@ Patient PatientDao::findByPatientIndex(const QString &patient_name, int sex, int
     QString idxKey = buildIndex(patient_name, sex, flag);
     if (_indexCache.contains(idxKey)) {
         auto *key = _indexCache.object(idxKey);
-        return *_userCache.object(QString::number(*key));
+        return *_userCache.object(*key);
     }
 
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientIndex")
@@ -103,8 +102,7 @@ bool PatientDao::deletePatient(int id)
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "delete").arg(key);
     bool res = DBUtil::delete_(sql);
     if (res) {
-        _userCache.remove(key);
-        _indexCache.remove(indexes.join(""));
+        removeFromCache(indexes.join(""), id);
     }
     return res;
 }
@@ -125,9 +123,16 @@ QStringList PatientDao::findIndexById(int id)
     return DBUtil::selectStrings(sql);
 }
 
+// --------------------------------------Cache Operation-----------------------------------------------
 void PatientDao::insertIntoCache(const QString &idxKey, Patient *patient)
 {
-    _userCache.insert(QString::number(patient->id), patient);
+    _userCache.insert(patient->id, patient);
     auto *idptr = new int(patient->id);
     _indexCache.insert(idxKey, idptr);
+}
+
+void PatientDao::removeFromCache(const QString &idxKey, int id)
+{
+    _userCache.remove(id);
+    _indexCache.remove(idxKey);
 }

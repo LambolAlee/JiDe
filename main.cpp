@@ -23,10 +23,18 @@ int main(int argc, char *argv[])
     qApp->setStyleSheet("file:///:/stylesheet/style.qss");
 
     RecordManager w;
+
+#ifdef Q_OS_MAC
+    w.show();
+#endif// Q_OS_MAC
+
+#ifdef Q_OS_WIN
     TitleMenuBar *tb = new TitleMenuBar(w.menuBar(), &w);
     CFramelessWindow *fw = new CFramelessWindow;
     fw->makeFrameless(&w, tb, tb->title());
     tb->setParentWidget(fw);
     fw->show();
+#endif// Q_OS_WIN
+
     return a.exec();
 }
