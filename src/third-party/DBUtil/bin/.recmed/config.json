@@ -1,23 +1,26 @@
 {
     "database": {
         "debug": true,
-        "type": "QMYSQL",
+        "type": "QSQLITE",
         "host": "127.0.0.1",
         "port": 3306,
-        "database_name": "qt",
+        "db_files": {
+            "selected_db": "db/sample.db",
+            "storage": [
+                "db/sample.db"
+            ]
+        },
         "username": "root",
         "password": "root",
         "test_on_borrow": true,
         "test_on_borrow_sql": "SELECT 1",
         "sql_files": [
-            "resources/sql/user.sql",
-            "resources/sql/product.sql"
+            "sql/record.sql",
+            "sql/patient.sql"
         ]
     },
 
     "qss_files": [
-        "resources/qss/button.css",
-        "resources/qss/groupbox.css",
-        "resources/qss/centralWidget.css"
+
     ]
 }
