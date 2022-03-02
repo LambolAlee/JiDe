@@ -15,10 +15,11 @@ public:
     Patient *findByPatientId(int id);
     Patient *findByPatientIndex(const QString &patient_name, int sex, int flag);
     int insert(Patient *patient);
-    //bool update(Patient *patient);
+    bool update(Patient *patient);
     bool deletePatient(int id);
 
 private:
+    static constexpr const char * const SQL_NAMESPACE_PATIENT = "Patient";
     QCache<int, Patient> _userCache;
     QCache<QString, int> _indexCache;
 

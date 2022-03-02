@@ -35,11 +35,14 @@ void PatientInfoDock::connectSignalsWithSlots()
     connect(ui->nativePlaceLE, &QLineEdit::textChanged, this, [=](const QString &text){triggerUndoButton(ui->resetNpBtn, "native_place", text);});
     connect(ui->birthPlaceLE, &QLineEdit::textChanged, this, [=](const QString &text){triggerUndoButton(ui->resetBpBtn, "birth_place", text);});
 
-    connect(ui->sexGroup, &QButtonGroup::idToggled, this, &PatientInfoDock::triggerUndoButtonForButtonGroup);
-    connect(ui->ethnicCB, &QComboBox::currentTextChanged, this, [=](const QString &text){triggerUndoButton(ui->resetEthnicBtn, "ethnicity", text);});
+    connect(ui->sexGroup, &QButtonGroup::idToggled, this, &PatientInfoDock::triggerUndoButtonForSex);
+    connect(ui->ethnicCB, &QComboBox::currentIndexChanged, this, &PatientInfoDock::triggerUndoButtonForEthnicity);
 
     connect(_returnButton, &QPushButton::clicked, this, &PatientInfoDock::returnButton_clicked);
     connect(_editButton, &QPushButton::clicked, this, &PatientInfoDock::editButton_clicked);
+
+    connect(ui->saveButton, &QPushButton::clicked, this, &PatientInfoDock::saveChanges);
+    connect(ui->discardButton, &QPushButton::clicked, this, &PatientInfoDock::discardChanges);
 }
 
 void PatientInfoDock::createNavigateBar()
@@ -51,6 +54,21 @@ void PatientInfoDock::createNavigateBar()
     _returnButton = new QPushButton("return", this);
     _returnButton->setFixedWidth(50);
     ui->editPageLayout->addWidget(_returnButton, 0,0 , Qt::AlignLeft);
+}
+
+void PatientInfoDock::saveChanges()
+{
+    if (_patient->isEmpty()) return;
+    PatientDao::instance().update(_patient);
+    for (auto &&btn: ui->allToolButtons->buttons()) {
+        btn->setEnabled(false);
+    }
+}
+
+void PatientInfoDock::discardChanges()
+{
+    if (_patient->isEmpty()) return;
+    updateEditArea();
 }
 
 void PatientInfoDock::setById(int id)
@@ -91,29 +109,26 @@ void PatientInfoDock::editButton_clicked()
     updateEditArea();
 }
 
-void PatientInfoDock::triggerUndoButton(QToolButton *toolBtn, const char *propertyName, const QString &changedText)
-{
-    QString comp;
-    if (propertyName == QStringLiteral("ethnicity")) {
-        comp = PatientConst::toString(PatientConst::ToEthnicity, _patient->property(propertyName).toInt());
-    } else {
-        comp = _patient->property(propertyName).toString();
-    }
-    if (changedText == comp) {
+void PatientInfoDock::triggerUndoButton(QToolButton *toolBtn, const char *propertyName, const QVariant &value) {
+    if (value == _patient->property(propertyName)) {
         toolBtn->setEnabled(false);
+        _patient->remove(propertyName);
     } else {
         toolBtn->setEnabled(true);
+        _patient->insert(propertyName, value);
     }
 }
 
-void PatientInfoDock::triggerUndoButtonForButtonGroup(int id, bool bl)
+void PatientInfoDock::triggerUndoButtonForSex(int id, bool bl)
 {
     if (!bl) return;
-    if (id == _patient->property("sex")) {
-        ui->resetSexBtn->setEnabled(false);
-    } else {
-        ui->resetSexBtn->setEnabled(true);
-    }
+    triggerUndoButton(ui->resetSexBtn, "sex", id);
+}
+
+void PatientInfoDock::triggerUndoButtonForEthnicity(int index)
+{
+    int currentIndex = ui->ethnicCB->itemData(index).toInt();
+    triggerUndoButton(ui->resetEthnicBtn, "ethnicity", currentIndex);
 }
 
 void PatientInfoDock::reset(QLineEdit *lineEdit, const char *propertyName)

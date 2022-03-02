@@ -2,8 +2,6 @@
 #include "db/DBUtil.h"
 #include "db/sqls.h"
 
-const char * const SQL_NAMESPACE_PATIENT = "Patient";
-
 
 PatientDao::~PatientDao()
 {
@@ -39,7 +37,8 @@ Patient *PatientDao::findByPatientId(int id)
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
     Patient *patient = DBUtil::selectBean(mapToPatient, sql);
     insertIntoCache(buildIndex(patient), patient);
-    return patient;
+    return patient; // fix later
+    /*patientdao.cpp:40:5: Use of memory after it is freed [clang-analyzer-cplusplus.NewDelete]*/
 }
 
 Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, int flag)
@@ -54,7 +53,7 @@ Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, in
                                     .arg(patient_name, QString::number(sex), QString::number(flag));
     Patient *patient = DBUtil::selectBean(mapToPatient, sql);
     insertIntoCache(idxKey, patient);
-    return patient;
+    return patient; // fix later
 }
 
 int PatientDao::insert(Patient *patient)
@@ -76,11 +75,21 @@ int PatientDao::insert(Patient *patient)
     return newId;
 }
 
+bool PatientDao::update(Patient *patient)
+{
+    QString updateString = patient->save();
+    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "update").arg(updateString, QString::number(patient->getId()));
+    bool res = DBUtil::update(sql);
+    if (res) {
+
+    }
+    return res;
+}
+
 bool PatientDao::deletePatient(int id)
 {
-    QString key = QString::number(id);
     QStringList indexes = findIndexById(id);
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "delete").arg(key);
+    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "delete").arg(QString::number(id));
     bool res = DBUtil::delete_(sql);
     if (res) {
         removeFromCache(indexes.join(""), id);

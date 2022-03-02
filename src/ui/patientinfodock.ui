@@ -46,8 +46,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>307</width>
-            <height>609</height>
+            <width>122</width>
+            <height>408</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="showPageGridLayout">
@@ -645,9 +645,6 @@
            </item>
            <item row="3" column="0">
             <widget class="QPushButton" name="discardButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="text">
               <string>Discard</string>
              </property>
@@ -655,9 +652,6 @@
            </item>
            <item row="3" column="1">
             <widget class="QPushButton" name="saveButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="text">
               <string>Save</string>
              </property>
@@ -676,7 +670,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="sexGroup"/>
   <buttongroup name="allToolButtons"/>
+  <buttongroup name="sexGroup"/>
  </buttongroups>
 </ui>

@@ -33,6 +33,7 @@
     </sql>
 
     <sql id="update">
+        UPDATE <include defineId="table"/> SET %1 WHERE id=%2
     </sql>
 
     <sql id="delete">

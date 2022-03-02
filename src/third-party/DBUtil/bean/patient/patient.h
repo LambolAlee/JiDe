@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QDate>
+#include <QVariantMap>
 
 #include "patientconst.h"
 
@@ -19,7 +20,7 @@
 
 // ---------------------------macro end-----------------------------
 
-class Patient : public QObject
+class Patient : public QObject, public QVariantMap
 {
     Q_OBJECT
 
@@ -42,6 +43,9 @@ class Patient : public QObject
     QString _native_place;
     QString _birth_place;
     QString _career;
+
+public:
+    const QString save();
 };
 
 #endif // PATIENT_H

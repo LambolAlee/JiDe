@@ -28,12 +28,15 @@ private slots:
     void returnButton_clicked();
     void editButton_clicked();
 
-    void triggerUndoButton(QToolButton *toolBtn, const char *propertyName, const QString &changedText);
-    void triggerUndoButtonForButtonGroup(int id, bool bl);
+    void triggerUndoButton(QToolButton *toolBtn, const char *propertyName, const QVariant &value);
+    void triggerUndoButtonForSex(int id, bool bl);
+    void triggerUndoButtonForEthnicity(int index);
     void reset(QLineEdit *lineEdit, const char *propertyName);
 
     void on_resetSexBtn_clicked();
     void on_resetEthnicBtn_clicked();
+
+    void updateEditArea();
 
 private:
     Ui::PatientInfoDock *ui;
@@ -48,7 +51,8 @@ private:
     void connectSignalsWithSlots();
     void createNavigateBar();
 
-    void updateEditArea();
+    void saveChanges();
+    void discardChanges();
     void updateShowArea();
 };
 
