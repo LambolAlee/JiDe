@@ -3,6 +3,8 @@ A Medical Record recorder for Chinese medicine students managing and learing cas
 
 ### Build
 The program now is still under development, if you want to run it you can follow the guide below.
+This program is mainly developed under windows10, also can run on macOS too but the ui is very ugly.
+use Qt 6.2.0 and above
 #### First
 ```sh
 git clone https://github.com/LambolAlee/RecMed.git
