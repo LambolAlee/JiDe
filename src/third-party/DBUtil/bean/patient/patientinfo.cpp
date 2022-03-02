@@ -4,7 +4,6 @@
 PatientInfo::PatientInfo(QObject *parent)
     : QObject{parent}
 {
-
 }
 
 PatientInfo::PatientInfo(int id, QObject *parent)

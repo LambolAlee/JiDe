@@ -4,7 +4,7 @@
 #include <QVariantMap>
 #include <QCache>
 
-#include "bean/patient.h"
+#include "bean/patient/patient.h"
 #include "util/Singleton.h"
 
 class PatientDao
@@ -12,10 +12,10 @@ class PatientDao
     SINGLETON(PatientDao)
 
 public:
-    Patient findByPatientId(int id);
-    Patient findByPatientIndex(const QString &patient_name, int sex, int flag);
+    Patient *findByPatientId(int id);
+    Patient *findByPatientIndex(const QString &patient_name, int sex, int flag);
     int insert(Patient *patient);
-    bool update(Patient *patient);
+    //bool update(Patient *patient);
     bool deletePatient(int id);
 
 private:
@@ -24,7 +24,7 @@ private:
 
     static Patient *mapToPatient(const QVariantMap &rowMap);
 
-    QString buildIndex(const Patient &patient);
+    QString buildIndex(Patient *patient);
     QString buildIndex(const QString &patient_name, int sex, int flag);
 
     QStringList findIndexById(int id);

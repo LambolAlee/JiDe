@@ -6,7 +6,8 @@ INCLUDEPATH += $$PWD
 
 HEADERS += \
     $$PWD/bean/User.h \
-    $$PWD/bean/patient.h \
+    $$PWD/bean/patient/patient.h \
+    $$PWD/bean/patient/patientconst.h \
     $$PWD/bean/record.h \
     $$PWD/dao/UserDao.h \
     $$PWD/dao/patientdao.h \
@@ -20,7 +21,8 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/bean/User.cpp \
-    $$PWD/bean/patient.cpp \
+    $$PWD/bean/patient/patient.cpp \
+    $$PWD/bean/patient/patientconst.cpp \
     $$PWD/bean/record.cpp \
     $$PWD/dao/UserDao.cpp \
     $$PWD/dao/patientdao.cpp \

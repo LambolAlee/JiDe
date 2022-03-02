@@ -18,81 +18,62 @@ PatientDao::PatientDao()
 Patient *PatientDao::mapToPatient(const QVariantMap &rowMap)
 {
     Patient *patient = new Patient;
-    patient->id = rowMap.value("id").toInt();
-    patient->patient_name = rowMap.value("patient_name").toString();
-    patient->sex = rowMap.value("sex").toBool();
-    patient->flag = rowMap.value("flag").toInt();
-    patient->birthday = rowMap.value("birthday").toDate();
-    patient->ethnicity = rowMap.value("ethnicity").toInt();
-    patient->native_place = rowMap.value("native_place").toString();
-    patient->birth_place = rowMap.value("birth_place").toString();
-    patient->career = rowMap.value("career").toString();
+    patient->setId(rowMap.value("id").toInt());
+    patient->setPatientName(rowMap.value("patient_name").toString());
+    patient->setSex(rowMap.value("sex").toBool());
+    patient->setFlag(rowMap.value("flag").toInt());
+    patient->setBirthday(rowMap.value("birthday").toDate());
+    patient->setEthnicity(rowMap.value("ethnicity").toInt());
+    patient->setNativePlace(rowMap.value("native_place").toString());
+    patient->setBirthPlace(rowMap.value("birth_place").toString());
+    patient->setCareer(rowMap.value("career").toString());
     return patient;
 }
 
-Patient PatientDao::findByPatientId(int id)
+Patient *PatientDao::findByPatientId(int id)
 {
     if (_userCache.contains(id)) {
-        return *_userCache.object(id);
+        return _userCache.object(id);
     }
 
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
     Patient *patient = DBUtil::selectBean(mapToPatient, sql);
-    insertIntoCache(buildIndex(*patient), patient);
-    return *patient;
+    insertIntoCache(buildIndex(patient), patient);
+    return patient;
 }
 
-Patient PatientDao::findByPatientIndex(const QString &patient_name, int sex, int flag)
+Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, int flag)
 {
     QString idxKey = buildIndex(patient_name, sex, flag);
     if (_indexCache.contains(idxKey)) {
         auto *key = _indexCache.object(idxKey);
-        return *_userCache.object(*key);
+        return _userCache.object(*key);
     }
 
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientIndex")
                                     .arg(patient_name, QString::number(sex), QString::number(flag));
     Patient *patient = DBUtil::selectBean(mapToPatient, sql);
     insertIntoCache(idxKey, patient);
-    return *patient;
+    return patient;
 }
 
 int PatientDao::insert(Patient *patient)
 {
     QVariantMap params;
-    params["patient_name"] = patient->patient_name;
-    params["sex"] = patient->sex;
-    params["flag"] = patient->flag;
-    params["birthday"] = patient->birthday.toString();
-    params["ethnicity"] = patient->ethnicity;
-    params["native_place"] = patient->native_place;
-    params["birth_place"] = patient->birth_place;
-    params["career"] = patient->career;
+    params["patient_name"] = patient->getPatientName();
+    params["sex"] = patient->getSex();
+    params["flag"] = patient->getFlag();
+    params["birthday"] = patient->getBirthday().toString();
+    params["ethnicity"] = patient->getEthnicity();
+    params["native_place"] = patient->getNativePlace();
+    params["birth_place"] = patient->getBirthPlace();
+    params["career"] = patient->getCareer();
 
     int newId = DBUtil::insert(Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "insert"), params);
     if (newId != -1) {
-        insertIntoCache(buildIndex(*patient), patient);
+        insertIntoCache(buildIndex(patient), patient);
     }
     return newId;
-}
-
-bool PatientDao::update(Patient *patient)
-{
-    QVariantMap params;
-    params["patient_name"] = patient->patient_name;
-    params["sex"] = patient->sex;
-    params["flag"] = patient->flag;
-    params["birthday"] = patient->birthday.toString();
-    params["ethnicity"] = patient->ethnicity;
-    params["native_place"] = patient->native_place;
-    params["birth_place"] = patient->birth_place;
-    params["career"] = patient->career;
-
-    bool res = DBUtil::update(Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "update"), params);
-    if (res) {
-        insertIntoCache(buildIndex(*patient), patient);
-    }
-    return res;
 }
 
 bool PatientDao::deletePatient(int id)
@@ -107,9 +88,9 @@ bool PatientDao::deletePatient(int id)
     return res;
 }
 
-QString PatientDao::buildIndex(const Patient &p)
+QString PatientDao::buildIndex(Patient *p)
 {
-    return QString("%1%2%3").arg(p.patient_name, QString::number(p.sex), QString::number(p.flag));
+    return QString("%1%2%3").arg(p->getPatientName(), QString::number(p->getSex()), QString::number(p->getFlag()));
 }
 
 QString PatientDao::buildIndex(const QString &patient_name, int sex, int flag)
@@ -126,8 +107,8 @@ QStringList PatientDao::findIndexById(int id)
 // --------------------------------------Cache Operation-----------------------------------------------
 void PatientDao::insertIntoCache(const QString &idxKey, Patient *patient)
 {
-    _userCache.insert(patient->id, patient);
-    auto *idptr = new int(patient->id);
+    auto *idptr = new int(patient->getId());
+    _userCache.insert(patient->getId(), patient);
     _indexCache.insert(idxKey, idptr);
 }
 

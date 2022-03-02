@@ -25,8 +25,6 @@ macx{
 
 SOURCES += \
     main.cpp \
-    src/patient/patientconst.cpp \
-    src/patient/patientinfo.cpp \
     src/ui/examinewidget.cpp \
     src/ui/groupeditorwidget.cpp \
     src/ui/patientinfodock.cpp \
@@ -35,8 +33,6 @@ SOURCES += \
     src/ui/titlemenubar.cpp
 
 HEADERS += \
-    src/patient/patientconst.h \
-    src/patient/patientinfo.h \
     src/ui/examinewidget.h \
     src/ui/groupeditorwidget.h \
     src/ui/patientinfodock.h \
