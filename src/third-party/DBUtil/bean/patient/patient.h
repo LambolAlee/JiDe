@@ -7,18 +7,19 @@
 
 #include "patientconst.h"
 
+// ---------------------------macro begin-----------------------------
 #define PropertyWithAccess(type, methodType, name, methodName)\
         Q_PROPERTY(type name READ get##methodName WRITE set##methodName)\
     public:\
         void set##methodName(const decltype(QVariant().to##methodType()) &value) {\
-            this->_##name = value;\
+            _##name = value;\
         }\
         decltype(QVariant().to##methodType()) get##methodName() const {\
-            return this->_##name;\
+            return _##name;\
         }\
     private:\
 
-// ---------------------------macro end-----------------------------
+// ----------------------------macro end-------------------------------
 
 class Patient : public QObject, public QVariantMap
 {

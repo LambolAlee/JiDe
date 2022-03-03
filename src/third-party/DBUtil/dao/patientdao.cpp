@@ -3,14 +3,14 @@
 #include "db/sqls.h"
 
 
+PatientDao::PatientDao()
+{
+}
+
 PatientDao::~PatientDao()
 {
     _userCache.clear();
     _indexCache.clear();
-}
-
-PatientDao::PatientDao()
-{
 }
 
 Patient *PatientDao::mapToPatient(const QVariantMap &rowMap)
@@ -30,30 +30,25 @@ Patient *PatientDao::mapToPatient(const QVariantMap &rowMap)
 
 Patient *PatientDao::findByPatientId(int id)
 {
-    if (_userCache.contains(id)) {
-        return _userCache.object(id);
+    if (!_userCache.contains(id)) {
+        QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
+        Patient *patient = DBUtil::selectBean(mapToPatient, sql);
+        insertIntoCache(patient);
     }
-
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
-    Patient *patient = DBUtil::selectBean(mapToPatient, sql);
-    insertIntoCache(buildIndex(patient), patient);
-    return patient; // fix later
-    /*patientdao.cpp:40:5: Use of memory after it is freed [clang-analyzer-cplusplus.NewDelete]*/
+    return _userCache.object(id);
 }
 
 Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, int flag)
 {
     QString idxKey = buildIndex(patient_name, sex, flag);
-    if (_indexCache.contains(idxKey)) {
-        auto *key = _indexCache.object(idxKey);
-        return _userCache.object(*key);
+    if (!_indexCache.contains(idxKey)) {
+        QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientIndex")
+                                        .arg(patient_name, QString::number(sex), QString::number(flag));
+        Patient *patient = DBUtil::selectBean(mapToPatient, sql);
+        insertIntoCache(idxKey, patient);
     }
-
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientIndex")
-                                    .arg(patient_name, QString::number(sex), QString::number(flag));
-    Patient *patient = DBUtil::selectBean(mapToPatient, sql);
-    insertIntoCache(idxKey, patient);
-    return patient; // fix later
+    auto *key = _indexCache.object(idxKey);
+    return _userCache.object(*key);
 }
 
 int PatientDao::insert(Patient *patient)
@@ -70,18 +65,19 @@ int PatientDao::insert(Patient *patient)
 
     int newId = DBUtil::insert(Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "insert"), params);
     if (newId != -1) {
-        insertIntoCache(buildIndex(patient), patient);
+        insertIntoCache(patient);
     }
     return newId;
 }
 
 bool PatientDao::update(Patient *patient)
 {
+    QString oldKey = buildIndex(patient);
     QString updateString = patient->save();
     QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "update").arg(updateString, QString::number(patient->getId()));
     bool res = DBUtil::update(sql);
     if (res) {
-
+        updateCache(oldKey, patient);
     }
     return res;
 }
@@ -99,12 +95,12 @@ bool PatientDao::deletePatient(int id)
 
 QString PatientDao::buildIndex(Patient *p)
 {
-    return QString("%1%2%3").arg(p->getPatientName(), QString::number(p->getSex()), QString::number(p->getFlag()));
+    return p->getPatientName() + QString::number(p->getSex()) + QString::number(p->getFlag());
 }
 
 QString PatientDao::buildIndex(const QString &patient_name, int sex, int flag)
 {
-    return QString("%1%2%3").arg(patient_name, QString::number(sex), QString::number(flag));
+    return patient_name + QString::number(sex) + QString::number(flag);
 }
 
 QStringList PatientDao::findIndexById(int id)
@@ -121,8 +117,23 @@ void PatientDao::insertIntoCache(const QString &idxKey, Patient *patient)
     _indexCache.insert(idxKey, idptr);
 }
 
+void PatientDao::insertIntoCache(Patient *patient)
+{
+    QString idxKey = buildIndex(patient);
+    insertIntoCache(idxKey, patient);
+}
+
 void PatientDao::removeFromCache(const QString &idxKey, int id)
 {
     _userCache.remove(id);
     _indexCache.remove(idxKey);
+}
+
+void PatientDao::updateCache(const QString &oldKey, Patient *patient)
+{
+    _indexCache.remove(oldKey);
+
+    QString idxKey = buildIndex(patient);
+    auto *idptr = new int(patient->getId());
+    _indexCache.insert(idxKey, idptr);
 }

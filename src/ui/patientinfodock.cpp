@@ -10,7 +10,7 @@ PatientInfoDock::PatientInfoDock(QWidget *parent) :
     ui->setupUi(this);
     ui->sexGroup->setId(ui->femaleRB, 0);
     ui->sexGroup->setId(ui->maleRB, 1);
-    for (auto &&k: PatientConst::Ethnicity.keys()) {
+    for (auto &k: PatientConst::Ethnicity.keys()) {
         ui->ethnicCB->addItem(PatientConst::Ethnicity.value(k), k);
     }
     ui->ethnicCB->model()->sort(0);
@@ -38,22 +38,25 @@ void PatientInfoDock::connectSignalsWithSlots()
     connect(ui->sexGroup, &QButtonGroup::idToggled, this, &PatientInfoDock::triggerUndoButtonForSex);
     connect(ui->ethnicCB, &QComboBox::currentIndexChanged, this, &PatientInfoDock::triggerUndoButtonForEthnicity);
 
-    connect(_returnButton, &QPushButton::clicked, this, &PatientInfoDock::returnButton_clicked);
     connect(_editButton, &QPushButton::clicked, this, &PatientInfoDock::editButton_clicked);
 
-    connect(ui->saveButton, &QPushButton::clicked, this, &PatientInfoDock::saveChanges);
-    connect(ui->discardButton, &QPushButton::clicked, this, &PatientInfoDock::discardChanges);
+    connect(_saveButton, &QPushButton::clicked, this, &PatientInfoDock::saveChanges);
+    connect(_discardButton, &QPushButton::clicked, this, &PatientInfoDock::discardChanges);
 }
 
 void PatientInfoDock::createNavigateBar()
 {
     _editButton = new QPushButton("edit", this);
     _editButton->setFixedWidth(50);
-    ui->showPageGridLayout->addWidget(_editButton, 0,1 , Qt::AlignRight);
+    ui->showPageGridLayout->addWidget(_editButton, 0,0 , Qt::AlignRight);
 
-    _returnButton = new QPushButton("return", this);
-    _returnButton->setFixedWidth(50);
-    ui->editPageLayout->addWidget(_returnButton, 0,0 , Qt::AlignLeft);
+    _discardButton = new QPushButton("discard", this);
+    _discardButton->setFixedWidth(50);
+    ui->editPageGridLayout->addWidget(_discardButton, 0,0 , Qt::AlignLeft);
+
+    _saveButton = new QPushButton("save", this);
+    _saveButton->setFixedWidth(50);
+    ui->editPageGridLayout->addWidget(_saveButton, 0,0 , Qt::AlignRight);
 }
 
 void PatientInfoDock::saveChanges()
@@ -63,12 +66,13 @@ void PatientInfoDock::saveChanges()
     for (auto &&btn: ui->allToolButtons->buttons()) {
         btn->setEnabled(false);
     }
+    backToShow();
 }
 
 void PatientInfoDock::discardChanges()
 {
+    backToShow();
     if (_patient->isEmpty()) return;
-    updateEditArea();
 }
 
 void PatientInfoDock::setById(int id)
@@ -97,7 +101,7 @@ void PatientInfoDock::updateShowArea()
     ui->nativePlaceLabel->setText(_patient->getNativePlace());
 }
 
-void PatientInfoDock::returnButton_clicked()
+void PatientInfoDock::backToShow()
 {
     ui->stackedWidget->setCurrentIndex(0);
     updateShowArea();

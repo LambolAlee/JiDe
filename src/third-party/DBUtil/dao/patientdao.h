@@ -1,7 +1,6 @@
 #ifndef PATIENTDAO_H
 #define PATIENTDAO_H
 
-#include <QVariantMap>
 #include <QCache>
 
 #include "bean/patient/patient.h"
@@ -31,7 +30,9 @@ private:
     QStringList findIndexById(int id);
 
 // --------------------------------------Cache Operation-----------------------------------------------
-    void insertIntoCache(const QString &idxKey, Patient *p);
+    void insertIntoCache(Patient *patient);
+    void insertIntoCache(const QString &idxKey, Patient *patient);
     void removeFromCache(const QString &idxKey, int id);
+    void updateCache(const QString &oldKey, Patient *patient);
 };
 #endif // PATIENTDAO_H

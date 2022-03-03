@@ -25,7 +25,6 @@ public:
     void setById(int id);
 
 private slots:
-    void returnButton_clicked();
     void editButton_clicked();
 
     void triggerUndoButton(QToolButton *toolBtn, const char *propertyName, const QVariant &value);
@@ -41,7 +40,6 @@ private slots:
 private:
     Ui::PatientInfoDock *ui;
     Patient *_patient; // no need to delete because patientdao will do this
-    QPushButton *_returnButton;
     QPushButton *_editButton;
     QPushButton *_saveButton;
     QPushButton *_discardButton;
@@ -53,6 +51,7 @@ private:
 
     void saveChanges();
     void discardChanges();
+    void backToShow();
     void updateShowArea();
 };
 

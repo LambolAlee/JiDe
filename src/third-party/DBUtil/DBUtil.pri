@@ -5,11 +5,9 @@ CONFIG += c++20
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/bean/User.h \
     $$PWD/bean/patient/patient.h \
     $$PWD/bean/patient/patientconst.h \
     $$PWD/bean/record.h \
-    $$PWD/dao/UserDao.h \
     $$PWD/dao/patientdao.h \
     $$PWD/dao/recorddao.h \
     $$PWD/db/ConnectionPool.h \
@@ -20,11 +18,9 @@ HEADERS += \
     $$PWD/util/Singleton.h
 
 SOURCES += \
-    $$PWD/bean/User.cpp \
     $$PWD/bean/patient/patient.cpp \
     $$PWD/bean/patient/patientconst.cpp \
     $$PWD/bean/record.cpp \
-    $$PWD/dao/UserDao.cpp \
     $$PWD/dao/patientdao.cpp \
     $$PWD/dao/recorddao.cpp \
     $$PWD/db/ConnectionPool.cpp \

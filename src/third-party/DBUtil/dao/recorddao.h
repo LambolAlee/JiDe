@@ -2,7 +2,6 @@
 #define RECORDDAO_H
 
 #include <QObject>
-#include <QVariant>
 #include <QVariantMap>
 
 #include "util/Singleton.h"
