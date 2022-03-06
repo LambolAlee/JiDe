@@ -5,6 +5,7 @@ CONFIG += c++20
 INCLUDEPATH += $$PWD
 
 HEADERS += \
+    $$PWD/bean/common.h \
     $$PWD/bean/patient/patient.h \
     $$PWD/bean/patient/patientconst.h \
     $$PWD/bean/record.h \
@@ -18,6 +19,7 @@ HEADERS += \
     $$PWD/util/Singleton.h
 
 SOURCES += \
+    $$PWD/bean/common.cpp \
     $$PWD/bean/patient/patient.cpp \
     $$PWD/bean/patient/patientconst.cpp \
     $$PWD/bean/record.cpp \

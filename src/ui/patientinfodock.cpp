@@ -14,7 +14,8 @@ PatientInfoDock::PatientInfoDock(QWidget *parent) :
         ui->ethnicCB->addItem(PatientConst::Ethnicity.value(k), k);
     }
     ui->ethnicCB->model()->sort(0);
-    createNavigateBar();
+    ui->stackedWidget->setCurrentIndex(0);
+    createEditButtons();
     connectSignalsWithSlots();
 }
 
@@ -44,7 +45,7 @@ void PatientInfoDock::connectSignalsWithSlots()
     connect(_discardButton, &QPushButton::clicked, this, &PatientInfoDock::discardChanges);
 }
 
-void PatientInfoDock::createNavigateBar()
+void PatientInfoDock::createEditButtons()
 {
     _editButton = new QPushButton("edit", this);
     _editButton->setFixedWidth(50);

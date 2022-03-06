@@ -18,7 +18,6 @@ CREATE TABLE info_patient (
 CREATE TABLE info_record (
     id              INTEGER PRIMARY KEY ASC,        -- 病历id
     patient_id      INTEGER NOT NULL,               -- 相关病人id
-    is_reexam       BOOLEAN DEFAULT 0,              -- 初诊还是复诊
     parent_record   INTEGER,                        -- 复诊关联的初诊病历id
     clinic_date     DATE DEFAULT CURRENT_DATE,      -- 就诊日期
     age             UNSIGNED TINYINT DEFAULT 0,     -- 就诊时年龄

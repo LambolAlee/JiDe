@@ -2,48 +2,45 @@
 #include "db/sqls.h"
 #include "db/DBUtil.h"
 
-const char * const SQL_NAMESPACE_RECORD = "Record";
+RecordDao::RecordDao() {}
 
+RecordDao::~RecordDao() {}
 
 Record RecordDao::mapToRecord(const QVariantMap &rowMap)
 {
     Record record;
-    record.id = rowMap.value("id").toInt();
-    record.patient_id = rowMap.value("patient_id").toInt();
-    record.is_reexam = rowMap.value("is_reexam").toBool();
-    record.parent_record = rowMap.value("parent_record").toInt();
-    record.clinic_date = rowMap.value("clinic_date").toDate();
-    record.age = rowMap.value("age").toInt();
-    record.doctor_name = rowMap.value("doctor_name").toString();
-    record.doctor_id = rowMap.value("doctor_id").toInt();
-    record.place = rowMap.value("place").toString();
+    record.setId(rowMap.value("id").toInt());
+    record.setPatientId(rowMap.value("patient_id").toInt());
+    record.setParentRecord(rowMap.value("parent_record").toInt());
+    record.setClinicDate(rowMap.value("clinic_date").toDate());
+    record.setAge(rowMap.value("age").toInt());
+    record.setDoctorName(rowMap.value("doctor_name").toString());
+    record.setDoctorId(rowMap.value("doctor_id").toInt());
+    record.setPlace(rowMap.value("place").toString());
 
     return record;
 }
 
-RecordTree RecordDao::mapToRecordTree(const QList<Record> &records)
+ClassifiedRecords RecordDao::findByPatientId(int id)
 {
-    RecordTree tree;
-    for (const Record &record: records) {
-        ChildRecord child = tree.value(record.parent_record);
-        if (record.parent_record == record.id)
-            child.prepend(record);
-        else
-            child.append(record);
-        tree.insert(record.parent_record, child);
+    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_RECORD, "findByPatientId").arg(QString::number(id));
+    Records records = DBUtil::selectBeans(mapToRecord, sql);
+    return classify(records);
+}
+
+ClassifiedRecords RecordDao::classify(Records records)
+{
+    QMap<int, RecordGroup> map;
+    for (auto &&record: records) {
+        if (record.isReexam()) {
+            auto group = map.value(record.getParentRecord());
+            group << record;
+            map.insert(record.getParentRecord(), group);
+        } else {
+            auto group = map.value(record.getId());
+            group.prepend(record);
+            map.insert(record.getId(), group);
+        }
     }
-    return tree;
-}
-
-Record RecordDao::findByRecordId(int id)
-{
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_RECORD, "findByRecordId").arg(id);
-    return DBUtil::selectBean(mapToRecord, sql);
-}
-
-RecordTree RecordDao::findByPatientId(int id)
-{
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_RECORD, "findByPatientId").arg(id);
-    auto records = DBUtil::selectBeans(mapToRecord, sql);
-    return mapToRecordTree(records);
+    return map;
 }

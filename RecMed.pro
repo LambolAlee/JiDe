@@ -25,26 +25,27 @@ macx{
 
 SOURCES += \
     main.cpp \
-    src/ui/examinewidget.cpp \
-    src/ui/groupeditorwidget.cpp \
+    src/recordnavigator/navigationcontroller.cpp \
     src/ui/patientinfodock.cpp \
     src/ui/recordeditorarea.cpp \
     src/ui/recordmanager.cpp \
+    src/ui/recordnavigator/recordnavigator.cpp \
+    src/ui/recordnavigator/recordtreeview.cpp \
     src/ui/titlemenubar.cpp
 
 HEADERS += \
-    src/ui/examinewidget.h \
-    src/ui/groupeditorwidget.h \
+    src/recordnavigator/navigationcontroller.h \
     src/ui/patientinfodock.h \
     src/ui/recordeditorarea.h \
     src/ui/recordmanager.h \
+    src/ui/recordnavigator/recordnavigator.h \
+    src/ui/recordnavigator/recordtreeview.h \
     src/ui/titlemenubar.h
 
 FORMS += \
-    src/ui/examinewidget.ui \
-    src/ui/groupeditorwidget.ui \
     src/ui/patientinfodock.ui \
     src/ui/recordmanager.ui \
+    src/ui/recordnavigator/recordnavigator.ui \
     src/ui/titlemenubar.ui
 
 TRANSLATIONS += \

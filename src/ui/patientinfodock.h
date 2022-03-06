@@ -47,7 +47,7 @@ private:
     QSize sizeHint() const override;
 
     void connectSignalsWithSlots();
-    void createNavigateBar();
+    void createEditButtons();
 
     void saveChanges();
     void discardChanges();

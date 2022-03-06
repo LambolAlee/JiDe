@@ -3,9 +3,7 @@
 #include "db/sqls.h"
 
 
-PatientDao::PatientDao()
-{
-}
+PatientDao::PatientDao() {}
 
 PatientDao::~PatientDao()
 {

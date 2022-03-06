@@ -9,13 +9,15 @@
 
 class RecordDao
 {
+    SINGLETON(RecordDao)
+
 public:
-    static Record findByRecordId(int id);
-    static RecordTree findByPatientId(int id);
+    ClassifiedRecords findByPatientId(int id);
 
 private:
+    static constexpr const char * const SQL_NAMESPACE_RECORD = "Record";
     static Record mapToRecord(const QVariantMap &rowMap);
-    static RecordTree mapToRecordTree(const QList<Record> &records);
+    static ClassifiedRecords classify(Records records);
 
 };
 

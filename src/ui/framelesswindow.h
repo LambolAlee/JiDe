@@ -54,7 +54,7 @@ public:
     void setContentsMargins(int left, int top, int right, int bottom);
     QMargins contentsMargins() const;
     QRect contentsRect() const;
-    // void getContentsMargins(int *left, int *top, int *right, int *bottom) const; qt6 abandoned use contentsMargins instead
+//    void getContentsMargins(int *left, int *top, int *right, int *bottom) const; qt6 abandoned use contentsMargins instead
 public slots:
     void showFullScreen();
 private:
