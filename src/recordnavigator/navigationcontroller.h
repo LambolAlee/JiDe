@@ -8,6 +8,9 @@
 
 class NavigationController : public QStandardItemModel
 {
+signals:
+    void dataUpdated();
+
 public:
     NavigationController();
 

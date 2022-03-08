@@ -31,6 +31,7 @@ void NavigationController::resetModel()
         root->appendRow(parentItem);
     }
     endResetModel();
+    emit dataUpdated();
 }
 
 const QList<QStandardItem *> NavigationController::getChildrenOf(const RecordGroup &group)

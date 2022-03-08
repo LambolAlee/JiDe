@@ -13,13 +13,14 @@ class PatientDao
 public:
     Patient *findByPatientId(int id);
     Patient *findByPatientIndex(const QString &patient_name, int sex, int flag);
+    QString findNameById(int id);
     int insert(Patient *patient);
     bool update(Patient *patient);
     bool deletePatient(int id);
 
 private:
     static constexpr const char * const SQL_NAMESPACE_PATIENT = "Patient";
-    QCache<int, Patient> _userCache;
+    QCache<int, Patient> _patientCache;
     QCache<QString, int> _indexCache;
 
     static Patient *mapToPatient(const QVariantMap &rowMap);

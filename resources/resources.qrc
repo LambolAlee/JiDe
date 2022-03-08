@@ -10,8 +10,12 @@
         <file>icon/tidy.svg</file>
         <file>icon/undo.svg</file>
         <file>icon/typelabel.svg</file>
+        <file>icon/document.svg</file>
+        <file>icon/group.svg</file>
+        <file>icon/fold.svg</file>
     </qresource>
     <qresource prefix="/stylesheet">
         <file>style.qss</file>
+        <file>icon/unfold.svg</file>
     </qresource>
 </RCC>

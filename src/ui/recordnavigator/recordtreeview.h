@@ -16,6 +16,8 @@ public:
 
 private:
     NavigationController _controller;
+
+    void updateIndexWidget();
 };
 
 #endif // RECORDTREEVIEW_H

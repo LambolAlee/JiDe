@@ -36,7 +36,8 @@ public:
 class RecordGroup : public QList<Record>
 {
 public:
-
+    const QString title() const;
+    const QString patientName() const;
 };
 
 using Records = QList<Record>;

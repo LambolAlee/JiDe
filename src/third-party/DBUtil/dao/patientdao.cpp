@@ -7,7 +7,7 @@ PatientDao::PatientDao() {}
 
 PatientDao::~PatientDao()
 {
-    _userCache.clear();
+    _patientCache.clear();
     _indexCache.clear();
 }
 
@@ -28,12 +28,12 @@ Patient *PatientDao::mapToPatient(const QVariantMap &rowMap)
 
 Patient *PatientDao::findByPatientId(int id)
 {
-    if (!_userCache.contains(id)) {
+    if (!_patientCache.contains(id)) {
         QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
         Patient *patient = DBUtil::selectBean(mapToPatient, sql);
         insertIntoCache(patient);
     }
-    return _userCache.object(id);
+    return _patientCache.object(id);
 }
 
 Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, int flag)
@@ -46,7 +46,15 @@ Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, in
         insertIntoCache(idxKey, patient);
     }
     auto *key = _indexCache.object(idxKey);
-    return _userCache.object(*key);
+    return _patientCache.object(*key);
+}
+
+QString PatientDao::findNameById(int id)    // usually used in record infomation query
+{
+    if (_patientCache.contains(id))
+        return _patientCache.object(id)->getPatientName();
+    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findNameById").arg(QString::number(id));
+    return DBUtil::selectString(sql);
 }
 
 int PatientDao::insert(Patient *patient)
@@ -111,7 +119,7 @@ QStringList PatientDao::findIndexById(int id)
 void PatientDao::insertIntoCache(const QString &idxKey, Patient *patient)
 {
     auto *idptr = new int(patient->getId());
-    _userCache.insert(patient->getId(), patient);
+    _patientCache.insert(patient->getId(), patient);
     _indexCache.insert(idxKey, idptr);
 }
 
@@ -123,7 +131,7 @@ void PatientDao::insertIntoCache(Patient *patient)
 
 void PatientDao::removeFromCache(const QString &idxKey, int id)
 {
-    _userCache.remove(id);
+    _patientCache.remove(id);
     _indexCache.remove(idxKey);
 }
 

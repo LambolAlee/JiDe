@@ -27,6 +27,10 @@
         SELECT patient_name, sex, flag FROM <include defineId="table"/> WHERE id=%1
     </sql>
 
+    <sql id="findNameById">
+        SELECT patient_name FROM <include defineId="table"/> WHERE id=%1
+    </sql>
+
     <sql id="insert">
         INSERT INTO <include defineId="table"/> (<include defineId="fields-no-id"/>)
         VALUES (<include defineId="fields-no-id-placeholder"/>)

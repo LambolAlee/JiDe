@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     a.setStyle(QStyleFactory::create("Fusion"));
     w.show();
 
-#elif Q_OS_WIN
+#elif defined Q_OS_WIN
     TitleMenuBar *tb = new TitleMenuBar(w.menuBar(), &w);
     CFramelessWindow *fw = new CFramelessWindow;
     fw->makeFrameless(&w, tb, tb->title());
