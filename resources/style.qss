@@ -25,6 +25,7 @@ StatePanel {
 
 #undoButton, #redoButton, #submitButton, #cancelButton {
     background: transparent;
+    border: none;
 }
 
 RecordCardFrame {

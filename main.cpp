@@ -6,6 +6,10 @@
 #include <QLocale>
 #include <QTranslator>
 
+#ifdef Q_OS_MAC
+#include <QStyleFactory>
+#endif
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -25,16 +29,17 @@ int main(int argc, char *argv[])
     RecordManager w;
 
 #ifdef Q_OS_MAC
+    a.setStyle(QStyleFactory::create("Fusion"));
     w.show();
-#endif// Q_OS_MAC
 
-#ifdef Q_OS_WIN
+#elif Q_OS_WIN
     TitleMenuBar *tb = new TitleMenuBar(w.menuBar(), &w);
     CFramelessWindow *fw = new CFramelessWindow;
     fw->makeFrameless(&w, tb, tb->title());
     tb->setParentWidget(fw);
     fw->show();
-#endif// Q_OS_WIN
+
+#endif
 
     return a.exec();
 }
