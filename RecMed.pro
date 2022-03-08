@@ -3,6 +3,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++20
+TARGET = RecMed
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -20,7 +21,9 @@ win32{
 }
 
 macx{
-    CONFIG -= app_bundle
+    #CONFIG -= app_bundle
+    QMAKE_INFO_PLIST = Info.plist
+    QMAKE_POST_LINK += cp -r $$PWD/src/third-party/DBUtil/bin/.recmed $$OUT_PWD/$${TARGET}.app/Contents/MacOS
 }
 
 SOURCES += \

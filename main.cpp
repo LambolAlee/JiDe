@@ -13,6 +13,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setOrganizationName("lambol");
+    a.setApplicationName("JiDe");
+    a.setApplicationDisplayName(QObject::tr("JiDe"));
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
