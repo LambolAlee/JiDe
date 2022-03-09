@@ -1,6 +1,7 @@
 #include "ui/recordmanager.h"
 #include "ui/framelesswindow.h"
 #include "ui/titlemenubar.h"
+#include "util/util.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    qApp->setStyleSheet("file:///:/stylesheet/style.qss");
+    Util::loadStyleSheet(":/stylesheet/style.qss");
 
     RecordManager w;
 
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     w.show();
 
 #elif defined Q_OS_WIN
+    Util::loadStyleSheet(":/stylesheet/font-win.qss");
     TitleMenuBar *tb = new TitleMenuBar(w.menuBar(), &w);
     CFramelessWindow *fw = new CFramelessWindow;
     fw->makeFrameless(&w, tb, tb->title());

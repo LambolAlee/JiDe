@@ -1,0 +1,18 @@
+/*------------------------------ UI FormularTableBody ------------------------------- */
+FormularTableBody > QLabel, FormularTableView, DrugEditor {
+    font-size: 10pt;
+}
+
+/*------------------------------- UI PatientInfoDock ---------------------------------*/
+QLabel#showPageTitle, QLabel#editPageTitle {
+    font-size: 11pt;
+}
+
+.DisplayLabel {
+    font-size: 10pt;
+}
+
+.CapLabel {
+    font-size: 11pt;
+    font-weight: bold;
+}

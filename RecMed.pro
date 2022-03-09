@@ -38,7 +38,8 @@ SOURCES += \
     src/ui/recordnavigator/recordnavigator.cpp \
     src/ui/recordnavigator/recordtreeview.cpp \
     src/ui/titlemenubar.cpp \
-    src/util/flowlayout.cpp
+    src/util/flowlayout.cpp \
+    src/util/util.cpp
 
 HEADERS += \
     src/recordnavigator/navigationcontroller.h \
@@ -51,7 +52,8 @@ HEADERS += \
     src/ui/recordnavigator/recordnavigator.h \
     src/ui/recordnavigator/recordtreeview.h \
     src/ui/titlemenubar.h \
-    src/util/flowlayout.h
+    src/util/flowlayout.h \
+    src/util/util.h
 
 FORMS += \
     src/ui/patientinfodock.ui \

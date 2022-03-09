@@ -13,9 +13,10 @@
         <file>icon/document.svg</file>
         <file>icon/group.svg</file>
         <file>icon/fold.svg</file>
+        <file>icon/unfold.svg</file>
     </qresource>
     <qresource prefix="/stylesheet">
         <file>style.qss</file>
-        <file>icon/unfold.svg</file>
+        <file>font-win.qss</file>
     </qresource>
 </RCC>
