@@ -15,7 +15,7 @@
         "test_on_borrow": true,
         "test_on_borrow_sql": "SELECT 1",
         "sql_files": [
-            "sql/record.sql",
+            "sql/recordinfo.sql",
             "sql/patient.sql"
         ]
     },

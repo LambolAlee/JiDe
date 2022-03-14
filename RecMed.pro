@@ -29,28 +29,22 @@ macx{
 SOURCES += \
     main.cpp \
     src/recordnavigator/navigationcontroller.cpp \
+    src/recordnavigator/recordsortfilterproxymodel.cpp \
     src/ui/patientinfodock.cpp \
     src/ui/recordeditorarea.cpp \
     src/ui/recordmanager.cpp \
-    src/ui/recordnavigator/groupitemwidget.cpp \
-    src/ui/recordnavigator/navitagsbar.cpp \
-    src/ui/recordnavigator/recorditemwidget.cpp \
     src/ui/recordnavigator/recordnavigator.cpp \
-    src/ui/recordnavigator/recordtreeview.cpp \
     src/ui/titlemenubar.cpp \
     src/util/flowlayout.cpp \
     src/util/util.cpp
 
 HEADERS += \
     src/recordnavigator/navigationcontroller.h \
+    src/recordnavigator/recordsortfilterproxymodel.h \
     src/ui/patientinfodock.h \
     src/ui/recordeditorarea.h \
     src/ui/recordmanager.h \
-    src/ui/recordnavigator/groupitemwidget.h \
-    src/ui/recordnavigator/navitagsbar.h \
-    src/ui/recordnavigator/recorditemwidget.h \
     src/ui/recordnavigator/recordnavigator.h \
-    src/ui/recordnavigator/recordtreeview.h \
     src/ui/titlemenubar.h \
     src/util/flowlayout.h \
     src/util/util.h
@@ -58,9 +52,6 @@ HEADERS += \
 FORMS += \
     src/ui/patientinfodock.ui \
     src/ui/recordmanager.ui \
-    src/ui/recordnavigator/groupitemwidget.ui \
-    src/ui/recordnavigator/navitagsbar.ui \
-    src/ui/recordnavigator/recorditemwidget.ui \
     src/ui/recordnavigator/recordnavigator.ui \
     src/ui/titlemenubar.ui
 

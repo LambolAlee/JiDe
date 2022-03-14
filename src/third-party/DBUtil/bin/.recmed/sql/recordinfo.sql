@@ -1,8 +1,8 @@
-<sqls namespace="Record">
+<sqls namespace="RecordInfo">
     <!--consts definition here-->
     <define id="table">info_record</define>
     <define id="fields">
-        id, patient_id, parent_record, clinic_date, age, doctor_name, doctor_id, place
+        id, patient_id, parent_record, clinic_date, age, doctor_name, doctor_id, place, display_name
     </define>
 
     <!--sql sentences here-->

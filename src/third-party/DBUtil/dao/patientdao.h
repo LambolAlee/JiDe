@@ -19,7 +19,6 @@ public:
     bool deletePatient(int id);
 
 private:
-    static constexpr const char * const SQL_NAMESPACE_PATIENT = "Patient";
     QCache<int, Patient> _patientCache;
     QCache<QString, int> _indexCache;
 

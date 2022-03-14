@@ -23,7 +23,8 @@ CREATE TABLE info_record (
     age             UNSIGNED TINYINT DEFAULT 0,     -- 就诊时年龄
     doctor_name     NCHAR(8) NOT NULL,              -- 医生姓名
     doctor_id       INTEGER NOT NULL,               -- 医生id
-    place           NCHAR(20) DEFAULT 'hospital',    -- 就诊医院
+    place           NCHAR(20) DEFAULT 'hospital',   -- 就诊医院
+    describe        TEXT DEFAULT 'new record', -- 对该病历的简要描述
     created_at      TIMESTAMP DEFAULT (datetime('now', 'localtime')),
     updated_at      TIMESTAMP DEFAULT (datetime('now', 'localtime'))
 );
@@ -35,6 +36,15 @@ FOR EACH ROW
 BEGIN
 	UPDATE info_record SET parent_record = id WHERE parent_record ISNULL;
 END;
+
+
+/* ================== create attr_record and its trigger =================== */
+CREATE TABLE attr_record (
+    id              INTEGER PRIMARY KEY ASC,
+    record_id       INTEGER NOT NULL,
+    created_at      TIMESTAMP DEFAULT (datetime('now', 'localtime')),
+    updated_at      TIMESTAMP DEFAULT (datetime('now', 'localtime'))
+)
 
 
 /* ================== create state_illness and its trigger =================== */

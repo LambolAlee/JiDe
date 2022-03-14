@@ -3,7 +3,7 @@
 
 #include <QStandardItemModel>
 
-#include "dao/recorddao.h"
+#include "dao/recordinfodao.h"
 
 
 class NavigationController : public QStandardItemModel
@@ -14,6 +14,10 @@ signals:
     void dataUpdated();
 
 public:
+    enum ItemType {
+        Child,
+        Parent,
+    };
     NavigationController();
 
     QStandardItemModel *model() { return this; }
@@ -24,7 +28,7 @@ private:
 
     void resetModel();
 
-    const QList<QStandardItem *> getChildrenOf(const RecordGroup &group);
+    const QList<QStandardItem *> getChildrenOf(const RecordInfoGroup &group);
 };
 
 #endif // NAVIGATIONCONTROLLER_H

@@ -1,14 +1,15 @@
-#include "recorddao.h"
+#include "recordinfodao.h"
 #include "db/sqls.h"
 #include "db/DBUtil.h"
+#include "global.h"
 
-RecordDao::RecordDao() {}
+RecordInfoDao::RecordInfoDao() {}
 
-RecordDao::~RecordDao() {}
+RecordInfoDao::~RecordInfoDao() {}
 
-Record RecordDao::mapToRecord(const QVariantMap &rowMap)
+RecordInfo RecordInfoDao::mapToRecord(const QVariantMap &rowMap)
 {
-    Record record;
+    RecordInfo record;
     record.setId(rowMap.value("id").toInt());
     record.setPatientId(rowMap.value("patient_id").toInt());
     record.setParentRecord(rowMap.value("parent_record").toInt());
@@ -17,20 +18,21 @@ Record RecordDao::mapToRecord(const QVariantMap &rowMap)
     record.setDoctorName(rowMap.value("doctor_name").toString());
     record.setDoctorId(rowMap.value("doctor_id").toInt());
     record.setPlace(rowMap.value("place").toString());
+    record.setDisplayName(rowMap.value("display_name").toString());
 
     return record;
 }
 
-ClassifiedRecords RecordDao::findByPatientId(int id)
+ClassifiedRecords RecordInfoDao::findByPatientId(int id)
 {
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_RECORD, "findByPatientId").arg(QString::number(id));
-    Records records = DBUtil::selectBeans(mapToRecord, sql);
+    QString sql = Sqls::instance().getSql(DaoNameSpace::RecordInfo, "findByPatientId").arg(QString::number(id));
+    RecordInfoSet records = DBUtil::selectBeans(mapToRecord, sql);
     return classify(records);
 }
 
-ClassifiedRecords RecordDao::classify(Records records)
+ClassifiedRecords RecordInfoDao::classify(RecordInfoSet records)
 {
-    QMap<int, RecordGroup> map;
+    QMap<int, RecordInfoGroup> map;
     for (auto &&record: records) {
         if (record.isReexam()) {
             auto group = map.value(record.getParentRecord());

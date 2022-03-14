@@ -1,6 +1,7 @@
 #include "patientdao.h"
 #include "db/DBUtil.h"
 #include "db/sqls.h"
+#include "global.h"
 
 
 PatientDao::PatientDao() {}
@@ -29,7 +30,7 @@ Patient *PatientDao::mapToPatient(const QVariantMap &rowMap)
 Patient *PatientDao::findByPatientId(int id)
 {
     if (!_patientCache.contains(id)) {
-        QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientId").arg(id);
+        QString sql = Sqls::instance().getSql(DaoNameSpace::Patient, "findByPatientId").arg(id);
         Patient *patient = DBUtil::selectBean(mapToPatient, sql);
         insertIntoCache(patient);
     }
@@ -40,7 +41,7 @@ Patient *PatientDao::findByPatientIndex(const QString &patient_name, int sex, in
 {
     QString idxKey = buildIndex(patient_name, sex, flag);
     if (!_indexCache.contains(idxKey)) {
-        QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findByPatientIndex")
+        QString sql = Sqls::instance().getSql(DaoNameSpace::Patient, "findByPatientIndex")
                                         .arg(patient_name, QString::number(sex), QString::number(flag));
         Patient *patient = DBUtil::selectBean(mapToPatient, sql);
         insertIntoCache(idxKey, patient);
@@ -53,7 +54,7 @@ QString PatientDao::findNameById(int id)    // usually used in record infomation
 {
     if (_patientCache.contains(id))
         return _patientCache.object(id)->getPatientName();
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findNameById").arg(QString::number(id));
+    QString sql = Sqls::instance().getSql(DaoNameSpace::Patient, "findNameById").arg(QString::number(id));
     return DBUtil::selectString(sql);
 }
 
@@ -69,7 +70,7 @@ int PatientDao::insert(Patient *patient)
     params["birth_place"] = patient->getBirthPlace();
     params["career"] = patient->getCareer();
 
-    int newId = DBUtil::insert(Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "insert"), params);
+    int newId = DBUtil::insert(Sqls::instance().getSql(DaoNameSpace::Patient, "insert"), params);
     if (newId != -1) {
         insertIntoCache(patient);
     }
@@ -80,7 +81,7 @@ bool PatientDao::update(Patient *patient)
 {
     QString oldKey = buildIndex(patient);
     QString updateString = patient->save();
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "update").arg(updateString, QString::number(patient->getId()));
+    QString sql = Sqls::instance().getSql(DaoNameSpace::Patient, "update").arg(updateString, QString::number(patient->getId()));
     bool res = DBUtil::update(sql);
     if (res) {
         updateCache(oldKey, patient);
@@ -91,7 +92,7 @@ bool PatientDao::update(Patient *patient)
 bool PatientDao::deletePatient(int id)
 {
     QStringList indexes = findIndexById(id);
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "delete").arg(QString::number(id));
+    QString sql = Sqls::instance().getSql(DaoNameSpace::Patient, "delete").arg(QString::number(id));
     bool res = DBUtil::delete_(sql);
     if (res) {
         removeFromCache(indexes.join(""), id);
@@ -111,7 +112,7 @@ QString PatientDao::buildIndex(const QString &patient_name, int sex, int flag)
 
 QStringList PatientDao::findIndexById(int id)
 {
-    QString sql = Sqls::instance().getSql(SQL_NAMESPACE_PATIENT, "findIndexById").arg(QString::number(id));
+    QString sql = Sqls::instance().getSql(DaoNameSpace::Patient, "findIndexById").arg(QString::number(id));
     return DBUtil::selectStrings(sql);
 }
 

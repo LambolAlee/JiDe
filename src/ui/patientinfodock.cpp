@@ -153,5 +153,5 @@ void PatientInfoDock::on_resetEthnicBtn_clicked()
 
 QSize PatientInfoDock::sizeHint() const
 {
-    return QSize(260, 400);
+    return QSize(260, 0);
 }

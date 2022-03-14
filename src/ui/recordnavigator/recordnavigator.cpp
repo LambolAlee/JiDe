@@ -6,7 +6,9 @@ RecordNavigator::RecordNavigator(QWidget *parent) :
     ui(new Ui::RecordNavigator)
 {
     ui->setupUi(this);
-    ui->naviGridLayout->addWidget(&_view);
+    ui->treeView->setModel(_controller.model());
+    ui->treeView->setHeaderHidden(true);
+    connect(ui->treeView, &QTreeView::clicked, this, &RecordNavigator::clickToExpand);
 }
 
 RecordNavigator::~RecordNavigator()
@@ -16,5 +18,14 @@ RecordNavigator::~RecordNavigator()
 
 void RecordNavigator::loadRecordsById(int id)
 {
-    _view.loadRecordsById(id);
+    _controller.loadRecordsById(id);
+}
+
+void RecordNavigator::clickToExpand(const QModelIndex &index)
+{
+    auto *item = _controller.itemFromIndex(index);
+    if (item->hasChildren()) {
+        if (ui->treeView->isExpanded(index)) ui->treeView->collapse(index);
+        else ui->treeView->expand(index);
+    }
 }

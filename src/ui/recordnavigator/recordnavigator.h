@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "recordtreeview.h"
+#include "recordnavigator/navigationcontroller.h"
 
 
 namespace Ui {
@@ -22,7 +22,9 @@ public:
 
 private:
     Ui::RecordNavigator *ui;
-    RecordTreeView _view;
+    NavigationController _controller;
+
+    void clickToExpand(const QModelIndex &index);
 };
 
 #endif // RECORDNAVIGATOR_H
