@@ -7,6 +7,11 @@ bool RecordInfo::isReexam()
     return _id != _parent_record;
 }
 
+QString RecordInfo::title() const
+{
+    return getClinicDate().toString("yyyy.MM.dd") + " " + getDisplayName();
+}
+
 QString RecordInfo::debug()
 {
     return QString("Record(id: %1, parent_record: %2, clinic_date: %3)").arg(
@@ -18,7 +23,8 @@ const QString RecordInfoGroup::title() const
     QList<QDate> dates;
     std::for_each(cbegin(), cend(), [&dates](const RecordInfo &info){ dates << info.getClinicDate(); });
     auto minAndMax = std::minmax_element(dates.cbegin(), dates.cend());
-    return (*minAndMax.first).toString("yyyy.MM.dd") + " - " + (*minAndMax.second).toString("yyyy.MM.dd");
+    auto span = (*minAndMax.first).toString("yyyy.MM.dd") + " - " + (*minAndMax.second).toString("yyyy.MM.dd");
+    return span + " " + first().getDisplayName();
 }
 
 const QString RecordInfoGroup::patientName() const

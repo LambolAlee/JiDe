@@ -3,10 +3,13 @@
 
 RecordNavigator::RecordNavigator(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RecordNavigator)
+    ui(new Ui::RecordNavigator),
+    _proxyModel(new RecordSortFilterProxyModel)
 {
     ui->setupUi(this);
-    ui->treeView->setModel(_controller.model());
+    _proxyModel->setSourceModel(_controller.model());
+    _proxyModel->sort(0);
+    ui->treeView->setModel(_proxyModel);
     ui->treeView->setHeaderHidden(true);
     connect(ui->treeView, &QTreeView::clicked, this, &RecordNavigator::clickToExpand);
 }
@@ -14,6 +17,7 @@ RecordNavigator::RecordNavigator(QWidget *parent) :
 RecordNavigator::~RecordNavigator()
 {
     delete ui;
+    delete _proxyModel;
 }
 
 void RecordNavigator::loadRecordsById(int id)
@@ -23,7 +27,7 @@ void RecordNavigator::loadRecordsById(int id)
 
 void RecordNavigator::clickToExpand(const QModelIndex &index)
 {
-    auto *item = _controller.itemFromIndex(index);
+    auto *item = _controller.itemFromIndex(_proxyModel->mapToSource(index));
     if (item->hasChildren()) {
         if (ui->treeView->isExpanded(index)) ui->treeView->collapse(index);
         else ui->treeView->expand(index);

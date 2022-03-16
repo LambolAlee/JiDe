@@ -33,6 +33,7 @@ class RecordInfo : public QVariantMap
 public:
     using QVariantMap::QVariantMap;
     bool isReexam();
+    QString title() const;
     QString debug(); // not provided for user will remove later
 };
 

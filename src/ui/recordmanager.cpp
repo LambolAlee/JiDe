@@ -4,14 +4,24 @@
 #include "recordcard/formular/ui/formulartablecard.h"
 #include "patientinfodock.h"
 #include "recordnavigator/recordnavigator.h"
+#include "recordeditorarea.h"
+#include "recorddocument.h"
 
 RecordManager::RecordManager(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::RecordManager)
 {
     ui->setupUi(this);
-    FormularTableCard *form = new FormularTableCard(this);
-    setCentralWidget(form);
+    // test to see the previewing   -- start
+    auto *editor = new RecordEditorArea(this);
+    auto *doc = new RecordDocument;
+    FormularTableCard *form1 = new FormularTableCard;
+    FormularTableCard *form2 = new FormularTableCard;
+    doc->addCard(form1);
+    doc->addCard(form2);
+    editor->addSubWindow(doc, Qt::FramelessWindowHint);
+    setCentralWidget(editor);
+    // test to see the previewing   -- end
 
     auto *pinfo = new PatientInfoDock(this);
     pinfo->setById(1);

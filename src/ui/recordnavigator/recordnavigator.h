@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "recordnavigator/navigationcontroller.h"
+#include "recordnavigator/recordsortfilterproxymodel.h"
 
 
 namespace Ui {
@@ -23,6 +24,7 @@ public:
 private:
     Ui::RecordNavigator *ui;
     NavigationController _controller;
+    RecordSortFilterProxyModel *_proxyModel;
 
     void clickToExpand(const QModelIndex &index);
 };

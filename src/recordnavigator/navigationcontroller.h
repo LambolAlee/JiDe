@@ -10,13 +10,10 @@ class NavigationController : public QStandardItemModel
 {
     Q_OBJECT
 
-signals:
-    void dataUpdated();
-
 public:
     enum ItemType {
-        Child,
         Parent,
+        Child,
     };
     NavigationController();
 

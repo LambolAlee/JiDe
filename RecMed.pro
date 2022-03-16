@@ -31,6 +31,7 @@ SOURCES += \
     src/recordnavigator/navigationcontroller.cpp \
     src/recordnavigator/recordsortfilterproxymodel.cpp \
     src/ui/patientinfodock.cpp \
+    src/ui/recorddocument.cpp \
     src/ui/recordeditorarea.cpp \
     src/ui/recordmanager.cpp \
     src/ui/recordnavigator/recordnavigator.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     src/recordnavigator/navigationcontroller.h \
     src/recordnavigator/recordsortfilterproxymodel.h \
     src/ui/patientinfodock.h \
+    src/ui/recorddocument.h \
     src/ui/recordeditorarea.h \
     src/ui/recordmanager.h \
     src/ui/recordnavigator/recordnavigator.h \
@@ -51,6 +53,7 @@ HEADERS += \
 
 FORMS += \
     src/ui/patientinfodock.ui \
+    src/ui/recorddocument.ui \
     src/ui/recordmanager.ui \
     src/ui/recordnavigator/recordnavigator.ui \
     src/ui/titlemenubar.ui

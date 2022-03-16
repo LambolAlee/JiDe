@@ -3,6 +3,7 @@
 
 #include <QMdiArea>
 
+
 class RecordEditorArea : public QMdiArea
 {
     Q_OBJECT
