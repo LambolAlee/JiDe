@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_MAC
     a.setStyle(QStyleFactory::create("Fusion"));
+    Util::loadStyleSheet(":/stylesheet/font-mac.qss");
     w.show();
 
 #elif defined Q_OS_WIN

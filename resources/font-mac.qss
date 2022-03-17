@@ -1,23 +1,23 @@
 /*------------------------------ UI RecordCardFrame --------------------------------- */
 RecordCardFrame > QLabel#titleLabel {
-    font-size: 14pt;
+    font-size: 19pt;
 }
 
 /*------------------------------ UI FormularTableBody ------------------------------- */
 FormularTableBody > QLabel, FormularTableView, DrugEditor {
-    font-size: 10pt;
+    font-size: 14pt;
 }
 
 /*------------------------------- UI PatientInfoDock ---------------------------------*/
 QLabel#showPageTitle, QLabel#editPageTitle {
-    font-size: 11pt;
+    font-size: 15pt;
 }
 
 .DisplayLabel {
-    font-size: 10pt;
+    font-size: 14pt;
 }
 
 .CapLabel {
-    font-size: 11pt;
+    font-size: 15pt;
     font-weight: bold;
 }

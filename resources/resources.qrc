@@ -18,5 +18,6 @@
     <qresource prefix="/stylesheet">
         <file>style.qss</file>
         <file>font-win.qss</file>
+        <file>font-mac.qss</file>
     </qresource>
 </RCC>
