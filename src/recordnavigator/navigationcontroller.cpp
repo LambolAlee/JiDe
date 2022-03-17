@@ -1,10 +1,7 @@
 #include "navigationcontroller.h"
 
 
-NavigationController::NavigationController()
-{
-
-}
+NavigationController::NavigationController() {}
 
 void NavigationController::loadRecordsById(int id)
 {
@@ -14,33 +11,32 @@ void NavigationController::loadRecordsById(int id)
 
 void NavigationController::resetModel()
 {
-    beginResetModel();
     auto root = invisibleRootItem();
     for (auto &&group: _recordMap) {
-        auto *parentItem = new QStandardItem;
+        auto titles = group.title();
+        auto *parentItem = new QStandardItem(titles.first);
+        auto *recordNameItem = new QStandardItem(titles.second);
         if (group.size() > 1) {
-            parentItem->setText(group.title());
             parentItem->setData(Parent, Qt::UserRole);
             parentItem->setData(QVariant::fromValue<RecordInfoGroup>(group), Qt::UserRole +1);
-            parentItem->appendRows(getChildrenOf(group));
+            arrangeChildrenOf(group, parentItem);
         } else {
-            parentItem->setText(group.first().title());
             parentItem->setData(Child, Qt::UserRole);
             parentItem->setData(QVariant::fromValue<RecordInfo>(group.first()), Qt::UserRole +1);
         }
-        root->appendRow(parentItem);
+        root->appendRow({parentItem, recordNameItem});
     }
-    endResetModel();
+    emit dataUpdated();
 }
 
-const QList<QStandardItem *> NavigationController::getChildrenOf(const RecordInfoGroup &group)
+void NavigationController::arrangeChildrenOf(const RecordInfoGroup &group, QStandardItem *parent)
 {
-    QList<QStandardItem *> children;
-    std::for_each(group.begin(), group.end(), [&children](const RecordInfo &info){
-        auto *item = new QStandardItem(info.title());
-        item->setData(Child, Qt::UserRole);
-        item->setData(QVariant::fromValue<RecordInfo>(info), Qt::UserRole +1);
-        children << item;
-    });
-    return children;
+    for (auto &&info: group) {
+        auto titles = info.title();
+        auto *timeItem = new QStandardItem(titles.first);
+        auto *recordNameItem = new QStandardItem(titles.second);
+        timeItem->setData(Child, Qt::UserRole);
+        timeItem->setData(QVariant::fromValue<RecordInfo>(info), Qt::UserRole +1);
+        parent->appendRow({timeItem, recordNameItem});
+    }
 }

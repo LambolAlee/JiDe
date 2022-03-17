@@ -33,7 +33,7 @@ class RecordInfo : public QVariantMap
 public:
     using QVariantMap::QVariantMap;
     bool isReexam();
-    QString title() const;
+    const QPair<QString, QString> title() const;
     QString debug(); // not provided for user will remove later
 };
 
@@ -41,7 +41,7 @@ class RecordInfoGroup : public QList<RecordInfo>
 {
 public:
     using QList<RecordInfo>::QList;
-    const QString title() const;
+    const QPair<QString, QString> title() const;
     const QString patientName() const;
 };
 

@@ -23,7 +23,7 @@ void RecordDocument::addCard(RecordCardFrame *frame)
 {
     frame->setParent(this);
     QStandardItem *item = new QStandardItem;
-    item->setSizeHint(frame->size());
+    item->setSizeHint(QSize(0, frame->size().height()));
     //item->setData(QVariant::fromValue<RecordCardFrame *>(frame));
     _model.appendRow(item);
     auto idx = _model.indexFromItem(item);

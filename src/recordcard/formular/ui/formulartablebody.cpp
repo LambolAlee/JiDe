@@ -11,9 +11,6 @@ FormularTableBody::FormularTableBody(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->formularTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-//    QPushButton *b = new QPushButton("Undo", this);
-//    b->setFocusPolicy(Qt::NoFocus);
-//    connect(b, &QPushButton::clicked, stack, &QUndoStack::undo);
 
     initModel();
     initActions();

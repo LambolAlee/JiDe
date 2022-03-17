@@ -11,6 +11,8 @@ RecordNavigator::RecordNavigator(QWidget *parent) :
     _proxyModel->sort(0);
     ui->treeView->setModel(_proxyModel);
     ui->treeView->setHeaderHidden(true);
+    //ui->treeView->header()->setSectionResizeMode(QHeaderView::Stretch);
+    connect(&_controller, &NavigationController::dataUpdated, this, [=]{ ui->treeView->resizeColumnToContents(0); });
     connect(ui->treeView, &QTreeView::clicked, this, &RecordNavigator::clickToExpand);
 }
 
@@ -27,9 +29,14 @@ void RecordNavigator::loadRecordsById(int id)
 
 void RecordNavigator::clickToExpand(const QModelIndex &index)
 {
-    auto *item = _controller.itemFromIndex(_proxyModel->mapToSource(index));
+    if (index.parent().isValid())
+        return;
+
+    auto &&proxyIndex = index.siblingAtColumn(0);
+    auto &&sourceIndex = _proxyModel->mapToSource(index);
+    auto *item = _controller.item(sourceIndex.row());
     if (item->hasChildren()) {
-        if (ui->treeView->isExpanded(index)) ui->treeView->collapse(index);
-        else ui->treeView->expand(index);
+        if (ui->treeView->isExpanded(proxyIndex)) ui->treeView->collapse(proxyIndex);
+        else ui->treeView->expand(proxyIndex);
     }
 }

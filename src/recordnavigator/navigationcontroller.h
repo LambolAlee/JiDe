@@ -10,6 +10,9 @@ class NavigationController : public QStandardItemModel
 {
     Q_OBJECT
 
+signals:
+    void dataUpdated();
+
 public:
     enum ItemType {
         Parent,
@@ -25,7 +28,7 @@ private:
 
     void resetModel();
 
-    const QList<QStandardItem *> getChildrenOf(const RecordInfoGroup &group);
+    void arrangeChildrenOf(const RecordInfoGroup &group, QStandardItem *parent);
 };
 
 #endif // NAVIGATIONCONTROLLER_H
