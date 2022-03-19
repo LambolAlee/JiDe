@@ -1,6 +1,7 @@
 ﻿#ifndef CFRAMELESSWINDOW_H
 #define CFRAMELESSWINDOW_H
 #include "qsystemdetection.h"
+#include "titlemenubar.h"
 #include <QObject>
 #include <QMainWindow>
 
@@ -33,11 +34,11 @@ public:
     //设置可调整大小区域的宽度，在此区域内，可以使用鼠标调整窗口大小
     //set border width, inside this aera, window can be resized by mouse
     void setResizeableAreaWidth(int width = 5);
-    void makeFrameless(QWidget *w, QWidget *titleBar, QLabel *title);
+    void makeFrameless(QWidget *w, TitleMenuBar *titleBar, QLabel *title);
 protected:
     //设置一个标题栏widget，此widget会被当做标题栏对待
     //set a widget which will be treat as SYSTEM titlebar
-    void setTitleBar(QWidget* titlebar);
+    void setTitleBar(TitleMenuBar* titlebar);
 
     //在标题栏控件内，也可以有子控件如标签控件“label1”，此label1遮盖了标题栏，导致不能通过label1拖动窗口
     //要解决此问题，使用addIgnoreWidget(label1)
@@ -58,7 +59,7 @@ public:
 public slots:
     void showFullScreen();
 private:
-    QWidget* m_titlebar;
+    TitleMenuBar* m_titlebar;
     QList<QWidget*> m_whiteList;
     int m_borderWidth;
 

@@ -20,6 +20,9 @@ public:
     void setParentWidget(QWidget *w) { _parentWidget = w; }
     QLabel *title();
 
+    void setIconMaximized();
+    void setIconNormal();
+
 protected:
      //bool eventFilter(QObject *obj, QEvent *ev) override;
 

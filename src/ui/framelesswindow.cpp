@@ -71,7 +71,7 @@ void CFramelessWindow::setResizeableAreaWidth(int width)
     m_borderWidth = width;
 }
 
-void CFramelessWindow::makeFrameless(QWidget *w, QWidget *titleBar, QLabel *title)
+void CFramelessWindow::makeFrameless(QWidget *w, TitleMenuBar *titleBar, QLabel *title)
 {
     setResizeableAreaWidth(7);
     auto content = new QWidget(this);
@@ -86,7 +86,7 @@ void CFramelessWindow::makeFrameless(QWidget *w, QWidget *titleBar, QLabel *titl
     addIgnoreWidget(title);
 }
 
-void CFramelessWindow::setTitleBar(QWidget* titlebar)
+void CFramelessWindow::setTitleBar(TitleMenuBar* titlebar)
 {
     m_titlebar = titlebar;
     if (!titlebar) return;
@@ -243,13 +243,15 @@ bool CFramelessWindow::nativeEvent(const QByteArray &eventType, void *message, q
                                             m_frames.top()+m_margins.top(), \
                                             m_frames.right()+m_margins.right(), \
                                             m_frames.bottom()+m_margins.bottom());
-            m_bJustMaximized = true;
+            m_bJustMaximized = true;    // maximized
+            m_titlebar->setIconNormal();
         }else {
             if (m_bJustMaximized)
             {
                 QMainWindow::setContentsMargins(m_margins);
                 m_frames = QMargins();
-                m_bJustMaximized = false;
+                m_bJustMaximized = false;   // normalized
+                m_titlebar->setIconMaximized();
             }
         }
         return false;

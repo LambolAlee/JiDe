@@ -25,6 +25,16 @@ QLabel *TitleMenuBar::title()
     return ui->title;
 }
 
+void TitleMenuBar::setIconMaximized()
+{
+    ui->maxButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_TitleBarMaxButton));
+}
+
+void TitleMenuBar::setIconNormal()
+{
+    ui->maxButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_TitleBarNormalButton));
+}
+
 void TitleMenuBar::on_minButton_clicked()
 {
     _parentWidget->showMinimized();
@@ -34,11 +44,11 @@ void TitleMenuBar::on_maxButton_clicked()
 {
     if (_parentWidget->isMaximized()){
         _parentWidget->showNormal();
-        ui->maxButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_TitleBarMaxButton));
+        setIconMaximized();
     }
     else{
         _parentWidget->showMaximized();
-        ui->maxButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_TitleBarNormalButton));
+        setIconNormal();
     }
 }
 
