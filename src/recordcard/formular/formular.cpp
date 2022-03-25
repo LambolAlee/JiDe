@@ -98,8 +98,17 @@ void Formular::tidy()
 bool Formular::needTidy()
 {
     int blank = count(Drug());
-    if (blank < columnCount) return false;
-    else return true;
+    if (blank == 0)
+        return false;
+    else if (blank >= columnCount)
+        return true;
+    else {
+        int left = size() - indexOf(Drug());
+        if (blank < left)
+            return true;
+        else
+            return false;
+    }
 }
 
 Drug Formular::toDrug(const QString &str)
@@ -110,6 +119,7 @@ Drug Formular::toDrug(const QString &str)
 
 void Formular::completeWithLayout(const DrugLayout &layout)
 {
+    removeAll(Drug());
     for (int i=0; i < layout.size(); ++i) {
         if (layout.at(i)) continue;
         insert(i, Drug());
@@ -123,7 +133,7 @@ DrugLayout Formular::layout()
         if (drug.isEmpty()) layout << 0;
         else layout << 1;
     }
-    return layout.mid(0, layout.size()-completions()-2);
+    return layout;
 }
 
 int Formular::completions()

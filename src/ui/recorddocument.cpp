@@ -2,6 +2,7 @@
 #include "ui_recorddocument.h"
 
 #include "recordcard/recordcardframe.h"
+#include "util/util.h"
 
 #include <QScrollBar>
 
@@ -12,7 +13,6 @@ RecordDocument::RecordDocument(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     ui->listView->setModel(&_model);
-    ui->listView->setSpacing(10);
     ui->listView->setAutoScroll(false);
     ui->listView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listView->verticalScrollBar()->setSingleStep(18);

@@ -45,4 +45,5 @@ RecordDocument QListView {
 RecordDocument QListView::item {
     border-radius: 12px;
     background: #f0eded;
+    margin: 0.75em 1.25em;
 }
