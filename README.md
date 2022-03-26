@@ -1,6 +1,8 @@
 # RecMed
 A Medical Record recorder for Chinese medicine students managing and learing cases.
 
+### **!!! We are now designing the table structure. When finished I will continue to write according to the table designation.**
+
 ### Build
 The program now is still under development, if you want to run it you can follow the guide below.
 
