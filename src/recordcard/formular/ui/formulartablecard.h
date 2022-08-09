@@ -2,7 +2,7 @@
 #define FORMULARTABLECARD_H
 
 #include "recordcard/recordcardframe.h"
-#include "formulartablebody.h"
+
 
 class FormularTableCard : public RecordCardFrame
 {

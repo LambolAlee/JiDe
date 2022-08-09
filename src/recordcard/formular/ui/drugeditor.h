@@ -2,11 +2,12 @@
 #define DRUGEDITOR_H
 
 #include <QWidget>
-#include <QEvent>
 #include <QAbstractItemDelegate>
 
 #include "../formular.h"
 
+
+class QEvent;
 
 namespace Ui {
 class DrugEditor;

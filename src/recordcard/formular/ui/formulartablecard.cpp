@@ -1,6 +1,9 @@
 #include "formulartablecard.h"
 #include <QUndoStack>
 
+#include "formulartablebody.h"
+
+
 FormularTableCard::FormularTableCard(QWidget *parent)
     : RecordCardFrame(parent)
 {

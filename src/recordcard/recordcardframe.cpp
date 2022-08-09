@@ -1,7 +1,12 @@
 #include "recordcardframe.h"
 #include "ui_recordcardframe.h"
 
+#include "statepanel.h"
+#include "recordcardbody.h"
+
 #include <QAction>
+#include <QUndoCommand>
+
 
 RecordCardFrame::RecordCardFrame(QWidget *parent)
     : QWidget(parent)
@@ -60,6 +65,16 @@ void RecordCardFrame::setTitle(const QString &title)
 const QString RecordCardFrame::title() const
 {
     return ui->titleLabel->text();
+}
+
+void RecordCardFrame::addRedoAction(QAction *action)
+{
+    _statePanel->addRedoAction(action);
+}
+
+void RecordCardFrame::addUndoAction(QAction *action)
+{
+    _statePanel->addUndoAction(action);
 }
 
 void RecordCardFrame::submit()

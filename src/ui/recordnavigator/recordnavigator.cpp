@@ -1,6 +1,9 @@
 #include "recordnavigator.h"
 #include "ui_recordnavigator.h"
 
+#include "recordnavigator/recordsortfilterproxymodel.h"
+
+
 RecordNavigator::RecordNavigator(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RecordNavigator),

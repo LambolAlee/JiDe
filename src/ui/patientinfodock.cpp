@@ -1,7 +1,11 @@
 #include "patientinfodock.h"
 #include "ui_patientinfodock.h"
 
+#include "dao/patientdao.h"
+
 #include <QHBoxLayout>
+#include <QPushButton>
+
 
 PatientInfoDock::PatientInfoDock(QWidget *parent) :
     QWidget(parent),
@@ -10,9 +14,8 @@ PatientInfoDock::PatientInfoDock(QWidget *parent) :
     ui->setupUi(this);
     ui->sexGroup->setId(ui->femaleRB, 0);
     ui->sexGroup->setId(ui->maleRB, 1);
-    for (auto &k: PatientConst::Ethnicity.keys()) {
-        ui->ethnicCB->addItem(PatientConst::Ethnicity.value(k), k);
-    }
+    for (auto &v: PatientConst::Ethnicity)
+        ui->ethnicCB->addItem(v, PatientConst::Ethnicity.key(v));
     ui->ethnicCB->model()->sort(0);
     ui->stackedWidget->setCurrentIndex(0);
     createEditButtons();

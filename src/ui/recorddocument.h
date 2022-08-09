@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 
+
 class RecordCardFrame;
 
 namespace Ui {

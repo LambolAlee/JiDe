@@ -2,15 +2,13 @@
 #define FORMULARTABLEVIEW_H
 
 #include "drugeditor.h"
-#include "../formularmodel.h"
-#include "../command/basiccommand.h"
 
 #include <QTableView>
-#include <QKeyEvent>
 #include <QAbstractItemDelegate>
-#include <QMenu>
 
-class QAction;
+class QUndoCommand;
+class FormularModel;
+
 
 class FormularTableView : public QTableView
 {

@@ -1,8 +1,12 @@
 #include "formulartableview.h"
-#include "drugeditor.h"
+
+#include "../command/basiccommand.h"
 
 #include <QCursor>
 #include <QHeaderView>
+#include <QMenu>
+#include <QKeyEvent>
+
 
 FormularTableView::FormularTableView(QWidget *parent)
     : QTableView(parent)
@@ -153,7 +157,7 @@ void FormularTableView::finish(const QModelIndex &index, QAbstractItemDelegate::
     emit drugCountChanged(_fmodel->drugCount());
 }
 
-// =====================================Editor related code here==========================================
+// =====================================Editor related code here========================================== //
 void FormularTableView::openEditor(const QModelIndex &idx, QRect rect)
 {
     _editor.fitViewItemHeight(rect.height());

@@ -3,9 +3,6 @@
 
 #include <QMainWindow>
 
-#ifdef Q_OS_WIN
-#include "framelesswindow.h"
-#endif// Q_OS_WIN
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class RecordManager; }

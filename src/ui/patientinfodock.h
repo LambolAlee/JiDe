@@ -1,14 +1,13 @@
 #ifndef PATIENTINFODOCK_H
 #define PATIENTINFODOCK_H
 
-#include "bean/patient/patient.h"
-#include "dao/patientdao.h"
-
 #include <QWidget>
-#include <QToolButton>
-#include <QLineEdit>
-#include <QPushButton>
 
+
+class Patient;
+class QPushButton;
+class QToolButton;
+class QLineEdit;
 
 namespace Ui {
 class PatientInfoDock;

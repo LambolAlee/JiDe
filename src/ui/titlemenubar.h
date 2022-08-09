@@ -2,8 +2,10 @@
 #define TITLEMENUBAR_H
 
 #include <QWidget>
-#include <QMenuBar>
-#include <QLabel>
+
+
+class QLabel;
+class QMenuBar;
 
 namespace Ui {
 class TitleMenuBar;

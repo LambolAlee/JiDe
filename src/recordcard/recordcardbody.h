@@ -2,7 +2,8 @@
 #define RECORDCARDBODY_H
 
 #include <QWidget>
-#include <QUndoStack>
+
+class QUndoStack;
 
 class RecordCardBody : public QWidget
 {

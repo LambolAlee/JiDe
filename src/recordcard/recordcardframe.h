@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QPushButton>
 
-#include "typelabel.h"
-#include "statepanel.h"
-#include "recordcardbody.h"
+
+class StatePanel;
+class RecordCardBody;
 
 namespace Ui {
 class RecordCardFrame;
@@ -31,8 +31,8 @@ public:
     void setTitle(const QString &title);
     const QString title() const;
 
-    void addRedoAction(QAction *action) { _statePanel->addRedoAction(action); }
-    void addUndoAction(QAction *action) { _statePanel->addUndoAction(action); }
+    void addRedoAction(QAction *action);
+    void addUndoAction(QAction *action);
 
 protected slots:
     virtual void submit();

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+// deperacated
+
 class TypeLabel : public QWidget
 {
     Q_OBJECT

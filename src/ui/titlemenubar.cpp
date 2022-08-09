@@ -2,6 +2,8 @@
 #include "ui_titlemenubar.h"
 
 #include <QStyle>
+#include <QMenuBar>
+
 
 TitleMenuBar::TitleMenuBar(QMenuBar *menuBar, QWidget *parent) :
     QWidget(parent),

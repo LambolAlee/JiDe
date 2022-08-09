@@ -3,7 +3,8 @@
 
 #include <QWidget>
 
-#include "ledbutton.h"
+
+class LEDButton;
 
 namespace Ui {
 class StatePanel;

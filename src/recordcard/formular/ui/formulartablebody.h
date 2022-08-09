@@ -1,10 +1,9 @@
 #ifndef FORMULARTABLEBODY_H
 #define FORMULARTABLEBODY_H
 
-#include <QWidget>
-#include "../formularmodel.h"
 #include "recordcard/recordcardbody.h"
-#include <QUndoStack>
+
+class FormularModel;
 
 namespace Ui {
 class FormularTableBody;

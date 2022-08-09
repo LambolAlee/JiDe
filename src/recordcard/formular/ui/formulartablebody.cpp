@@ -2,8 +2,10 @@
 #include "ui_formulartablebody.h"
 
 #include "drugeditor.h"
+#include "../formularmodel.h"
 
-#include <QPushButton>
+#include <QUndoStack>
+
 
 FormularTableBody::FormularTableBody(QWidget *parent) :
     RecordCardBody(parent),

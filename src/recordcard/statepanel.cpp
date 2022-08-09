@@ -1,6 +1,8 @@
 #include "statepanel.h"
 #include "ui_statepanel.h"
 
+#include "ledbutton.h"
+
 
 StatePanel::StatePanel(QWidget *parent) :
     QWidget(parent),

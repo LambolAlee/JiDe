@@ -4,8 +4,9 @@
 #include <QWidget>
 
 #include "recordnavigator/navigationcontroller.h"
-#include "recordnavigator/recordsortfilterproxymodel.h"
 
+
+class RecordSortFilterProxyModel;
 
 namespace Ui {
 class RecordNavigator;
